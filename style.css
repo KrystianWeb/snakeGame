@@ -1,0 +1,57 @@
+#game {
+  position: absolute;
+  width: 700px;
+  height: 620px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  border: 1px solid black;
+
+  text-align: center;
+  font-family: "Segoe UI";
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 10px;
+  margin: auto;
+  border: 2px solid black;
+  background: #ccffff;
+}
+
+#score {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  width: 86px;
+  height: 50px;
+  margin: auto;
+}
+
+#levelSpeed {
+  position: absolute;
+  right: 0px;
+  top: 70px;
+  width: 86px;
+  height: 50px;
+  margin: auto;
+}
+
+#message {
+  position: absolute;
+  width: 300px;
+  height: 50px;
+  display: none;
+  top: 0;
+  right: 100px;
+  bottom: 0;
+  left: 0px;
+  margin: auto;
+  border: 1px solid black;
+  background: white;
+  z-index: 2;
+}
