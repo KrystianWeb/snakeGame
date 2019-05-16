@@ -7,16 +7,38 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Snake</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 
 <body>
-  <div id="game">
+  <div class="gameArea">
+    <canvas id="canvas" width="600" height="600">Sorry your browser does not support HTML5</canvas>
+    <div class="menu">
+      <i class="fas fa-cog"></i>
+      <i class="fas fa-info-circle"></i>
+      <i class="fas fa-chart-line"></i>
+    </div>
+    <div class="scorePanel">
+      <div class="currentGame">
+        <p>Score</p>
+        <p>10</p>
+        <p>Speed</p>
+        <p>2</p>
+      </div>
+      <div class="bestGame">
+        <p>Best score</p>
+        <p>101</p>
+      </div>
+    </div>
+  </div>
+  <!-- <div id="game">
     <canvas id="canvas" width="600" height="600">Sorry your browser does not support HTML5</canvas>
     <div id="score">Score:<br /><b>0</b></div>
     <div id="levelSpeed">Speed:<br /><b>1</b></div>
     <div id="message"></div>
   </div>
-  <script src="script.js"></script>
+  <script src="script.js"></script> -->
 </body>
 
 </html>

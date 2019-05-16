@@ -1,6 +1,8 @@
 window.onload = function () {
   canvas = document.getElementById("canvas");
-  context = canvas.getContext("2d");
+  context = canvas.getContext("2d", {
+    alpha: false
+  });
   document.addEventListener("keydown", keyEvent);
   levelDiv = document.getElementById("levelSpeed");
   scoreDiv = document.getElementById("score");
