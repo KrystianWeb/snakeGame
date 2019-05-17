@@ -5,7 +5,7 @@
 
 body {
   min-height: 100vh;
-  background-image: url(img/background.png);
+  background-image: url('../img/background.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -24,10 +24,10 @@ body {
   position: absolute;
   bottom: 100%;
   left: 2px;
-  background-color: rgb(244, 255, 204, 0.6);
+  background-color: #92D5D6;
   width: 600px;
   margin-bottom: 5px;
-  padding: 4px;
+  padding: 7px;
   border-radius: 10px;
 }
 
@@ -36,31 +36,43 @@ body {
   margin: 0 5px;
 }
 
+.menu i:hover {
+  font-size: 24px;
+  color: rgb(58, 47, 27);
+}
+
 .scorePanel {
   box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 100%;
-  background-color: rgb(244, 255, 204, 0.6);
+  background-color: #92D5D6;
   margin-left: 5px;
   width: 150px;
   height: 600px;
-  padding: 4px;
+  padding: 7px;
   border-radius: 10px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .scorePanel p {
   text-align: center;
+  padding: 5px;
+}
+
+.scorePanel p span {
+  font-weight: bold;
 }
 
 #canvas {
   border: 2px solid black;
   border-radius: 5px;
-  background: #cff;
+  background-color: rgb(182, 229, 229);
+  /* background: #99D8DA; #25a55d*/
 }
 
 /* #game {

@@ -1,0 +1,208 @@
+$mainColor: #92D5D6;
+$gameSize: 500px;
+$iconColors: (red, blue, yellow);
+$bgcModal: #fff;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: arial, sans-serif;
+  font-size: 10px;
+}
+
+body {
+  min-height: 100vh;
+  background-image: url('../img/background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.gameArea {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 100%;
+  left: 2px;
+  background-color: $mainColor;
+  width: $gameSize;
+  margin-bottom: 10px;
+  padding: 7px;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: space-between;
+
+  .leftMenu {
+    display: flex;
+  }
+
+  i {
+    position: relative;
+    font-size: 2rem;
+    margin: 0 5px;
+    cursor: pointer;
+
+    &:hover:after {
+      display: block;
+    }
+
+    &:after {
+      position: absolute;
+      content: attr(data-name);
+      display: none;
+      top: -30px;
+      left: -5px;
+      padding: 5px;
+      background-color: black;
+      border-radius: 5px;
+      color: white;
+      text-align: center;
+      font-family: arial, sans-serif;
+      font-weight: normal;
+      font-size: 1rem;
+    }
+
+    @for $i from 1 to length($iconColors)+1 {
+
+      &:nth-child(#{$i}):hover,
+      &.active:nth-child(#{$i}) {
+        color: nth($iconColors, $i);
+      }
+    }
+  }
+
+  button {
+    display: inline-block;
+    background-color: white;
+    border: none;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    margin-right: 5px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: black;
+    outline: none;
+    cursor: pointer;
+
+    &:nth-child(1).active {
+      background-color: blue;
+      color: white;
+    }
+
+    &:nth-child(2).active {
+      background-color: red;
+      color: white;
+    }
+  }
+}
+
+.scorePanel {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: $mainColor;
+  margin-left: 10px;
+  width: 150px;
+  height: $gameSize;
+  padding: 30px 0;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  >div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  p {
+    text-align: center;
+    padding: 5px;
+    font-size: 1.6rem;
+    font-weight: bold;
+
+    span {
+      display: block;
+      background-color: darken($mainColor, 20%);
+      border-radius: 10px;
+      width: 80px;
+      padding: 2px 0;
+      color: white;
+    }
+  }
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0 7px 0 grey;
+
+  flex-direction: column;
+
+  .title,
+  .buttons {
+    position: relative;
+    flex-basis: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+  }
+
+  .describe {
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    padding: 10px 15px;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+      background-color: white;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      box-shadow: 0 0 2px 0 grey;
+      cursor: pointer;
+      margin-left: 10px;
+
+      &.confirm {
+        background-color: blue;
+        box-shadow: 0 0 2px 0 blue;
+        color: white;
+      }
+    }
+  }
+
+  &.show {
+    display: flex;
+  }
+}
+
+#canvas {
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: lighten($mainColor, 10%);
+}

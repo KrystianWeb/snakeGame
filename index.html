@@ -6,39 +6,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Snake</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 
 <body>
   <div class="gameArea">
-    <canvas id="canvas" width="600" height="600">Sorry your browser does not support HTML5</canvas>
+    <canvas id="canvas" width="500" height="500">Sorry your browser does not support HTML5</canvas>
     <div class="menu">
-      <i class="fas fa-cog"></i>
-      <i class="fas fa-info-circle"></i>
-      <i class="fas fa-chart-line"></i>
+      <div class="leftMenu">
+        <i class="fas fa-cog" data-name="Settings"></i>
+        <i class="fas fa-info-circle" data-name="Instruction"></i>
+        <i class="fas fa-chart-line" data-name="Scores"></i>
+      </div>
+      <div class="rightMenu">
+        <button class="active">easy</button>
+        <button>hard</button>
+      </div>
     </div>
     <div class="scorePanel">
       <div class="currentGame">
-        <p>Score</p>
-        <p>10</p>
-        <p>Speed</p>
-        <p>2</p>
+        <p>Your score</p>
+        <p><span>10</span></p>
+        <p>Actual speed</p>
+        <p><span>2</span></p>
       </div>
       <div class="bestGame">
         <p>Best score</p>
-        <p>101</p>
+        <p><span>101</span></p>
       </div>
     </div>
   </div>
-  <!-- <div id="game">
-    <canvas id="canvas" width="600" height="600">Sorry your browser does not support HTML5</canvas>
-    <div id="score">Score:<br /><b>0</b></div>
-    <div id="levelSpeed">Speed:<br /><b>1</b></div>
-    <div id="message"></div>
+  <div class="settings modal show">
+    <div class="title">
+      <h1>Settings</h1>
+    </div>
+    <div class="describe">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo officia expedita suscipit sequi voluptate,
+        architecto ratione nulla natus libero nobis reprehenderit voluptas necessitatibus odio ducimus unde ipsum eaque
+        assumenda. Delectus, ad facilis! Cupiditate mollitia fuga provident voluptate dolor assumenda culpa modi dolore
+        temporibus earum. Possimus veritatis autem dolore placeat necessitatibus?</p>
+    </div>
+    <div class="buttons">
+      <button>Close</button>
+      <button class="confirm">OK</button>
+    </div>
   </div>
-  <script src="script.js"></script> -->
+  <div class="instruction modal">
+    <div class="title">
+      <h1>Instruction</h1>
+    </div>
+    <div class="describe">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo officia expedita suscipit sequi voluptate,
+        architecto ratione nulla natus libero nobis reprehenderit voluptas necessitatibus odio ducimus unde ipsum eaque
+        assumenda. Delectus, ad facilis! Cupiditate mollitia fuga provident voluptate dolor assumenda culpa modi dolore
+        temporibus earum. Possimus veritatis autem dolore placeat necessitatibus?</p>
+    </div>
+    <div class="buttons">
+      <button>Close</button>
+    </div>
+  </div>
+  <div class="scores"></div>
+  <script src="script.js"></script>
 </body>
 
 </html>
