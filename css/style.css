@@ -175,7 +175,7 @@ body {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  width: 400px;
+  width: 450px;
   border-radius: 10px;
   background-color: white;
   -webkit-box-shadow: 0 0 7px 0 grey;
@@ -193,12 +193,6 @@ body {
       flex-basis: 50px;
   line-height: 50px;
   padding: 0 15px;
-}
-
-.modal .describe {
-  border-top: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
-  padding: 10px 15px;
 }
 
 .modal .buttons {
@@ -219,23 +213,38 @@ body {
   outline: none;
   border-radius: 5px;
   padding: 5px 10px;
-  -webkit-box-shadow: 0 0 2px 0 grey;
-          box-shadow: 0 0 2px 0 grey;
+  -webkit-box-shadow: 0 0 5px 1px lightgrey;
+          box-shadow: 0 0 5px 1px lightgrey;
   cursor: pointer;
   margin-left: 10px;
+  text-transform: uppercase;
 }
 
-.modal .buttons button.confirm {
+.modal .buttons button:hover {
   background-color: blue;
-  -webkit-box-shadow: 0 0 2px 0 blue;
-          box-shadow: 0 0 2px 0 blue;
   color: white;
+  font-weight: bold;
+}
+
+.modal .describe {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  padding: 10px 15px;
+  font-size: 1.4rem;
+}
+
+.modal .describe p {
+  margin-bottom: 10px;
 }
 
 .modal.show {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.scores.modal {
+  width: 650px;
 }
 
 #canvas {

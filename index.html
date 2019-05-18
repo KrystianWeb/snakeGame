@@ -7,8 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Snake</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 </head>
 
 <body>
@@ -28,9 +28,9 @@
     <div class="scorePanel">
       <div class="currentGame">
         <p>Your score</p>
-        <p><span>10</span></p>
+        <p><span>0</span></p>
         <p>Actual speed</p>
-        <p><span>2</span></p>
+        <p><span>0</span></p>
       </div>
       <div class="bestGame">
         <p>Best score</p>
@@ -38,7 +38,7 @@
       </div>
     </div>
   </div>
-  <div class="settings modal show">
+  <div class="settings modal">
     <div class="title">
       <h1>Settings</h1>
     </div>
@@ -49,8 +49,8 @@
         temporibus earum. Possimus veritatis autem dolore placeat necessitatibus?</p>
     </div>
     <div class="buttons">
-      <button>Close</button>
-      <button class="confirm">OK</button>
+      <button class='close'>ok</button>
+      <!-- <button class="confirm">OK</button> -->
     </div>
   </div>
   <div class="instruction modal">
@@ -64,10 +64,21 @@
         temporibus earum. Possimus veritatis autem dolore placeat necessitatibus?</p>
     </div>
     <div class="buttons">
-      <button>Close</button>
+      <button class='close'>ok</button>
     </div>
   </div>
-  <div class="scores"></div>
+  <div class="scores modal">
+    <div class="title">
+      <h1>Scores</h1>
+    </div>
+    <div class="describe">
+      <p>Chart shows last 10 scores with upper line for max score.</p>
+      <canvas id="myChart" width="600" height="350"></canvas>
+    </div>
+    <div class="buttons">
+      <button class='close'>ok</button>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 

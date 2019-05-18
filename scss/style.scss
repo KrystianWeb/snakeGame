@@ -146,60 +146,7 @@ body {
   }
 }
 
-.modal {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 0 7px 0 grey;
-
-  flex-direction: column;
-
-  .title,
-  .buttons {
-    position: relative;
-    flex-basis: 50px;
-    line-height: 50px;
-    padding: 0 15px;
-  }
-
-  .describe {
-    border-top: 1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
-    padding: 10px 15px;
-  }
-
-  .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    button {
-      background-color: white;
-      border: none;
-      outline: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      box-shadow: 0 0 2px 0 grey;
-      cursor: pointer;
-      margin-left: 10px;
-
-      &.confirm {
-        background-color: blue;
-        box-shadow: 0 0 2px 0 blue;
-        color: white;
-      }
-    }
-  }
-
-  &.show {
-    display: flex;
-  }
-}
+@import 'modals';
 
 #canvas {
   border: 2px solid black;
