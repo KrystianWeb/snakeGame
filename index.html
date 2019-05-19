@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Snake</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 </head>
@@ -43,10 +43,29 @@
       <h1>Settings</h1>
     </div>
     <div class="describe">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo officia expedita suscipit sequi voluptate,
-        architecto ratione nulla natus libero nobis reprehenderit voluptas necessitatibus odio ducimus unde ipsum eaque
-        assumenda. Delectus, ad facilis! Cupiditate mollitia fuga provident voluptate dolor assumenda culpa modi dolore
-        temporibus earum. Possimus veritatis autem dolore placeat necessitatibus?</p>
+      <div class="options">
+        <span>Color of snake</span>
+        <span class="hardOptions">Options available in hard level</span>
+        <span>Bombs</span>
+        <span>Blocked walls</span>
+        <span>Random obstacles</span>
+      </div>
+      <div class="ticks">
+        <div class="color">a</div>
+        <div></div>
+        <label class="switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+        <label class="switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+        <label class="switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+      </div>
     </div>
     <div class="buttons">
       <button class='close'>ok</button>
@@ -79,7 +98,7 @@
       <button class='close'>ok</button>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="js/interface.js"></script>
 </body>
 
 </html>

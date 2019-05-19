@@ -24,7 +24,7 @@
   })
 })()
 
-//obsługa dodatkowych okien + wykres
+//wykres
 
 let maxScore = 124;
 let data = [100, 124, 54, 10, 34, 65, 7];
@@ -53,6 +53,7 @@ let myChart = new Chart(ctx, {
     }, {
       label: 'Max score',
       data: [124, 124, 124, 124, 124, 124, 124],
+      borderColor: 'green',
       fill: false,
       pointRadius: 0
     }]
