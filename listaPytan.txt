@@ -1,0 +1,3 @@
+1. Jak brak localStorage to gdzie zapisywać ustawienia? Czy pobierać każdorazowo dane ze stylów?
+2. Jak zabezpieczyć się przed sytuacją, kiedy ktoś sobie w przeglądarce wyczyści localStorage? (inicjuję obiekt na otwarcie strony i potem nie sprawdzam już jego istnienia tylko pobieram i zapisuję dane)
+3. Responsywność, obsługa na mobilkach - jak to rozwiązać? Obecnie działa to tylko na desktopie.

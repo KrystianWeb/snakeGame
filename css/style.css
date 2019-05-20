@@ -285,6 +285,19 @@ body {
           flex-grow: 1;
 }
 
+.settings .describe .ticks .color {
+  display: block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: red;
+  -webkit-box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
+          box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
 .switch {
   cursor: pointer;
 }

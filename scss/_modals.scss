@@ -83,13 +83,22 @@ $switchgreen: #48EA8B;
 
   .options {
     flex-basis: 65%;
-    // background-color: lightblue;
   }
 
   .ticks {
     align-items: center;
     flex-grow: 1;
-    // background-color: lightswitchgreen;
+
+    .color {
+      display: block;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      border-radius: 50%;
+      background-color: red;
+      box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
+      transition: .3s;
+    }
   }
 }
 
