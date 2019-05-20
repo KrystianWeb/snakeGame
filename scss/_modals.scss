@@ -58,10 +58,6 @@ $switchgreen: #48EA8B;
   }
 }
 
-.scores {
-  width: 650px;
-}
-
 .settings .describe {
   display: flex;
 
@@ -99,6 +95,24 @@ $switchgreen: #48EA8B;
       box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
       transition: .3s;
     }
+  }
+}
+
+.instruction {
+  p {
+    padding-bottom: 10px;
+
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.scores {
+  width: 650px;
+
+  .describe p {
+    padding-bottom: 10px;
   }
 }
 

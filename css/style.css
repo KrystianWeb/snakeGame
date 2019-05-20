@@ -239,10 +239,6 @@ body {
   display: flex;
 }
 
-.scores {
-  width: 650px;
-}
-
 .settings .describe {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -296,6 +292,22 @@ body {
           box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
   -webkit-transition: .3s;
   transition: .3s;
+}
+
+.instruction p {
+  padding-bottom: 10px;
+}
+
+.instruction p span {
+  font-weight: bold;
+}
+
+.scores {
+  width: 650px;
+}
+
+.scores .describe p {
+  padding-bottom: 10px;
 }
 
 .switch {

@@ -1,0 +1,1 @@
+//pomysły: blokowanie ścian, bomby zabierające punkty i skracające węża, generowanie przeszkód

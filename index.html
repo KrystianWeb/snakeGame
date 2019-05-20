@@ -18,7 +18,7 @@
       <div class="leftMenu">
         <i class="fas fa-cog" data-name="Settings"></i>
         <i class="fas fa-info-circle" data-name="Instruction"></i>
-        <i class="fas fa-chart-line" data-name="Scores"></i>
+        <i class="fas fa-chart-line chart" data-name="Scores"></i>
       </div>
       <div class="rightMenu">
         <button class="active">easy</button>
@@ -78,10 +78,15 @@
       <h1>Instruction</h1>
     </div>
     <div class="describe">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo officia expedita suscipit sequi voluptate,
-        architecto ratione nulla natus libero nobis reprehenderit voluptas necessitatibus odio ducimus unde ipsum eaque
-        assumenda. Delectus, ad facilis! Cupiditate mollitia fuga provident voluptate dolor assumenda culpa modi dolore
-        temporibus earum. Possimus veritatis autem dolore placeat necessitatibus?</p>
+      <p>On the easy level this is the classic snake game. You can control the snake by arrows on the keyboard.</p>
+      <p>One fruit gives you one point. Every 10 points the snake will be faster.
+        <hr>
+      </p>
+      <p>On the hard level you can turn on additional options in settings.</p>
+      <p><span>Bombs</span> - eating a bomb removes 5 points. The bombs will show once a minute.</p>
+      <p><span>Blocked walls</span> - the attempt at going through the walls ends the game.</p>
+      <p><span>Random obstacles</span> - at the beginning of the game random obstacles will be added to the board.
+        Hitting them ends the game.</p>
     </div>
     <div class="buttons">
       <button class='close'>ok</button>
@@ -92,7 +97,8 @@
       <h1>Scores</h1>
     </div>
     <div class="describe">
-      <p>Chart shows last 10 scores with upper line for max score.</p>
+      <p>Chart shows last 10 scores with upper line for max score. Color of the point indicates what color the snake was
+        during the game.</p>
       <canvas id="myChart" width="600" height="350"></canvas>
     </div>
     <div class="buttons">
@@ -100,6 +106,7 @@
     </div>
   </div>
   <script src="js/interface.js"></script>
+  <script src="js/game.js"></script>
 </body>
 
 </html>

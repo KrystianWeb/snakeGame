@@ -1,4 +1,21 @@
-//handling icons and buttons
+let myChart;
+
+const updateChart = function (chart) {
+  const localObject = JSON.parse(localStorage.getItem('snakeGame')).scores;
+
+  const data = localObject.data.map(el => el.score);
+  const labels = localObject.data.map(el => el.time);
+  const pointsColors = localObject.data.map(el => el.color);
+  const maxArray = new Array(data.length).fill(localObject.maxScore);
+
+  chart.data.labels = labels;
+  chart.data.datasets[0].data = data;
+  chart.data.datasets[0].pointBackgroundColor = pointsColors;
+  chart.data.datasets[0].pointBorderColor = pointsColors;
+  chart.data.datasets[1].data = maxArray;
+  chart.update();
+};
+
 const prepareInterface = function () {
   //icons for opening modals
   const modals = [...document.querySelectorAll('.modal')];
@@ -9,6 +26,7 @@ const prepareInterface = function () {
   const switches = [...document.querySelectorAll('.settings .ticks .switch input')];
   //get object from localStorage
   const localObject = JSON.parse(localStorage.getItem('snakeGame'));
+  const bestScore = document.querySelector('.scorePanel .bestGame span');
 
   const confirmSettings = function () {
     let updateLocalObject = JSON.parse(localStorage.getItem('snakeGame'));
@@ -18,7 +36,6 @@ const prepareInterface = function () {
     localStorage.setItem('snakeGame', JSON.stringify(updateLocalObject))
   };
 
-  //init
   iconsForModals.forEach((el, index) => {
     el.addEventListener('click', () => {
       //add class for the right modal and for the icon
@@ -26,7 +43,10 @@ const prepareInterface = function () {
       modals[index].classList.add('show');
       //remove class from other modals and icons
       iconsForModals.filter((el, i) => i != index).forEach(el => el.classList.remove('active'));
-      modals.filter((el, i) => i != index).forEach(el => el.classList.remove('show'))
+      modals.filter((el, i) => i != index).forEach(el => el.classList.remove('show'));
+
+      if (el.classList.contains('chart'))
+        updateChart(myChart);
     })
   });
 
@@ -36,9 +56,8 @@ const prepareInterface = function () {
       iconsForModals[index].classList.remove('active');
       modals[index].classList.remove('show');
 
-      if (el.classList.contains('confirm')) {
+      if (el.classList.contains('confirm'))
         confirmSettings();
-      }
     });
   });
 
@@ -52,41 +71,48 @@ const prepareInterface = function () {
   switches.forEach((el, index) => {
     localObject.hardOptions[index] ? el.checked = true : el.checked = false;
   });
+
+  bestScore.innerHTML = localObject.scores.maxScore;
 }
 
-//wykres
 const prepareChart = function () {
-  let maxScore = 124;
-  let data = [100, 124, 54, 10, 34, 65, 7];
-  let pointColors = ['red', 'red', 'red', 'blue', 'blue', 'green', 'blue'];
   const ctx = document.getElementById('myChart').getContext('2d');
-  let myChart = new Chart(ctx, {
+  myChart = new Chart(ctx, {
     plugins: [{
       beforeInit: function (chart) {
         chart.data.labels.forEach(function (e, i, a) {
-          if (/\n/.test(e)) {
-            a[i] = e.split(/\n/);
+          if (/-/.test(e)) {
+            a[i] = e.split(/-/);
+          }
+        });
+      },
+      afterUpdate: function (chart) {
+        chart.data.labels.forEach(function (e, i, a) {
+          if (/-/.test(e)) {
+            a[i] = e.split(/-/);
           }
         });
       }
     }],
     type: 'line',
     data: {
-      labels: ['18.05.2019\n14:10', '18.05.2019\n14:10', '18.05.2019\n14:10', '18.05.2019\n14:10', '18.05.2019\n14:10', '18.05.2019\n14:10', '18.05.2019\n14:10'],
+      labels: [],
       datasets: [{
-        label: 'Score',
-        data: data,
-        borderColor: 'gray',
-        borderWidth: 2,
-        pointBackgroundColor: pointColors,
-        pointBorderColor: pointColors
-      }, {
-        label: 'Max score',
-        data: [124, 124, 124, 124, 124, 124, 124],
-        borderColor: 'green',
-        fill: false,
-        pointRadius: 0
-      }]
+          label: 'Score',
+          data: [],
+          borderColor: 'gray',
+          borderWidth: 2,
+          pointBackgroundColor: [],
+          pointBorderColor: []
+        },
+        {
+          label: 'Max score',
+          data: [],
+          borderColor: 'green',
+          fill: false,
+          pointRadius: 0
+        }
+      ]
     },
     options: {
       legend: {
@@ -112,19 +138,25 @@ const prepareChart = function () {
 
 //obsługa przycisków zmiany poziomu
 
-//pomysły: blokowanie ścian, bomby zabierające punkty i skracające węża, generowanie przeszkód - do włączenia w ustawieniach;
-//jak dobry wynik (lepszy od besta) to stylizować go
+//jak dobry wynik (lepszy od besta) to stylizować go;
+
+//multiline na wykresie nie działa, jaki plugin?
 
 //inicjalizacja całości
 (function () {
   //prepare object in localStorage for first run of game
   if (!localStorage.getItem('snakeGame')) {
     let localObject = {
-      color: 'green',
+      color: 'red',
       level: 'easy',
-      hardOptions: [true, false, false],
+      hardOptions: [false, false, false],
       scores: {
-        maxScore: 101
+        maxScore: 0,
+        data: [{
+          score: 10,
+          time: '20.05.2019-19:00',
+          color: 'red'
+        }]
       }
     };
     localStorage.setItem('snakeGame', JSON.stringify(localObject));
