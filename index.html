@@ -29,14 +29,18 @@
     <div class="scorePanel">
       <div class="currentGame">
         <p>Your score</p>
-        <p><span>0</span></p>
+        <p><span class='score'>0</span></p>
         <p>Actual speed</p>
-        <p><span>0</span></p>
+        <p><span class='speed'>0</span></p>
       </div>
       <div class="bestGame">
         <p>Best score</p>
-        <p><span>101</span></p>
+        <p><span class='best'>101</span></p>
       </div>
+    </div>
+    <div class="result show">
+      <p>Welcome to the snake game!</p>
+      <button class='startGame'>start</button>
     </div>
   </div>
   <div class="settings modal">
@@ -46,6 +50,7 @@
     <div class="describe">
       <div class="options">
         <span>Color of snake</span>
+        <span>Initial speed of snake</span>
         <span class="hardOptions">Options available in hard level</span>
         <span>Bombs</span>
         <span>Blocked walls</span>
@@ -54,6 +59,9 @@
       <div class="ticks">
         <div>
           <span class="color"></span>
+        </div>
+        <div>
+          <input class="speed" type="range" min="1" max="10" step="1">
         </div>
         <div></div>
         <label class="switch">

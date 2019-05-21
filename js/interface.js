@@ -23,15 +23,17 @@ const prepareInterface = function () {
   const confirmButtons = [...document.querySelectorAll('.modal button.close')];
   //buttons for settings
   const colorOfSnake = document.querySelector('.settings .ticks .color');
+  const speedOfSnake = document.querySelector('.settings .ticks .speed');
   const switches = [...document.querySelectorAll('.settings .ticks .switch input')];
   //get object from localStorage
   const localObject = JSON.parse(localStorage.getItem('snakeGame'));
-  const bestScore = document.querySelector('.scorePanel .bestGame span');
+  const bestScore = document.querySelector('.scorePanel .best');
 
   const confirmSettings = function () {
     let updateLocalObject = JSON.parse(localStorage.getItem('snakeGame'));
-    updateLocalObject.color = colorOfSnake.style.backgroundColor;
+    updateLocalObject.snakeColor = colorOfSnake.style.backgroundColor;
     updateLocalObject.hardOptions = switches.map(el => el.checked);
+    updateLocalObject.initialSpeed = speedOfSnake.value;
 
     localStorage.setItem('snakeGame', JSON.stringify(updateLocalObject))
   };
@@ -61,7 +63,8 @@ const prepareInterface = function () {
     });
   });
 
-  colorOfSnake.style.backgroundColor = localObject.color;
+  speedOfSnake.value = localObject.initialSpeed;
+  colorOfSnake.style.backgroundColor = localObject.snakeColor;
   colorOfSnake.addEventListener('click', function () {
     const availableColors = ['red', 'blue', 'green'];
     const color = this.style.backgroundColor;
@@ -147,16 +150,13 @@ const prepareChart = function () {
   //prepare object in localStorage for first run of game
   if (!localStorage.getItem('snakeGame')) {
     let localObject = {
-      color: 'red',
+      snakeColor: 'red',
+      initialSpeed: 1,
       level: 'easy',
       hardOptions: [false, false, false],
       scores: {
         maxScore: 0,
-        data: [{
-          score: 10,
-          time: '20.05.2019-19:00',
-          color: 'red'
-        }]
+        data: []
       }
     };
     localStorage.setItem('snakeGame', JSON.stringify(localObject));
