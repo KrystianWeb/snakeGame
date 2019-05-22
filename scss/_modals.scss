@@ -1,6 +1,3 @@
-$switchred: #FF4651;
-$switchgreen: #48EA8B;
-
 .modal {
   display: none;
   position: absolute;
@@ -85,15 +82,37 @@ $switchgreen: #48EA8B;
     align-items: center;
     flex-grow: 1;
 
-    .color {
-      display: block;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      border-radius: 50%;
-      background-color: red;
-      box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
-      transition: .3s;
+    .colors {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+
+      span {
+        display: block;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: attr[data-color];
+        box-shadow: 0 0 0 1px white, 0 0 0 2px gray;
+        transition: .3s;
+
+        &.red {
+          background-color: red;
+        }
+
+        &.blue {
+          background-color: blue;
+        }
+
+        &.green {
+          background-color: green;
+        }
+
+        &.active {
+          box-shadow: 0 0 0 2px white, 0 0 0 4px gray;
+        }
+      }
     }
   }
 }

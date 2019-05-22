@@ -39,7 +39,8 @@
       </div>
     </div>
     <div class="result show">
-      <p>Welcome to the snake game!</p>
+      <p><span>Welcome to the snake game!</span>Options in the upper menu are available before starting/reseting the
+        game!</p>
       <button class='startGame'>start</button>
     </div>
   </div>
@@ -57,8 +58,10 @@
         <span>Random obstacles</span>
       </div>
       <div class="ticks">
-        <div>
-          <span class="color"></span>
+        <div class="colors">
+          <span class='red active'></span>
+          <span class='blue'></span>
+          <span class='green'></span>
         </div>
         <div>
           <input class="speed" type="range" min="1" max="10" step="1">
@@ -106,7 +109,8 @@
       <h1>Scores</h1>
     </div>
     <div class="describe">
-      <p>Chart shows last 10 scores with upper line for max score. Color of the point indicates what color the snake was
+      <p>Chart shows last 10 scores (including the best result) with upper line for max score. Color of the point
+        indicates what color the snake was
         during the game.</p>
       <canvas id="myChart" width="600" height="350"></canvas>
     </div>

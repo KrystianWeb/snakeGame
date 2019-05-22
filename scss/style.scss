@@ -2,9 +2,12 @@ $mainColor: #92D5D6;
 $gameSize: 500px;
 $iconColors: (red, blue, yellow);
 $bgcModal: #fff;
+$switchred: #FF4651;
+$switchgreen: #48EA8B;
 
 @import 'interface';
 @import 'modals';
+// @import 'inputRange';
 
 #canvas {
   border: 2px solid black;

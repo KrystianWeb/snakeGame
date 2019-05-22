@@ -56,11 +56,16 @@ body {
   cursor: pointer;
 }
 
-.menu i:hover:after {
+.menu i.disable {
+  color: gray;
+  cursor: auto;
+}
+
+.menu i:not(.disable):hover:after {
   display: block;
 }
 
-.menu i:after {
+.menu i:not(.disable):after {
   position: absolute;
   content: attr(data-name);
   display: none;
@@ -76,15 +81,15 @@ body {
   font-size: 1rem;
 }
 
-.menu i:nth-child(1):hover, .menu i.active:nth-child(1) {
+.menu i:not(.disable):nth-child(1):hover, .menu i:not(.disable).active:nth-child(1) {
   color: red;
 }
 
-.menu i:nth-child(2):hover, .menu i.active:nth-child(2) {
+.menu i:not(.disable):nth-child(2):hover, .menu i:not(.disable).active:nth-child(2) {
   color: blue;
 }
 
-.menu i:nth-child(3):hover, .menu i.active:nth-child(3) {
+.menu i:not(.disable):nth-child(3):hover, .menu i:not(.disable).active:nth-child(3) {
   color: yellow;
 }
 
@@ -175,7 +180,7 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 250px;
+  width: 350px;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   padding: 10px;
@@ -184,6 +189,12 @@ body {
   background-color: white;
   -webkit-box-shadow: 0 0 7px 0 grey;
           box-shadow: 0 0 7px 0 grey;
+}
+
+.result span {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .result.show {
@@ -327,17 +338,44 @@ body {
           flex-grow: 1;
 }
 
-.settings .describe .ticks .color {
+.settings .describe .ticks .colors {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.settings .describe .ticks .colors span {
   display: block;
   width: 20px;
   height: 20px;
   cursor: pointer;
   border-radius: 50%;
-  background-color: red;
-  -webkit-box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
-          box-shadow: 0 0 0 2px white, 0 0 0 3px gray;
+  background-color: attr [data-color];
+  -webkit-box-shadow: 0 0 0 1px white, 0 0 0 2px gray;
+          box-shadow: 0 0 0 1px white, 0 0 0 2px gray;
   -webkit-transition: .3s;
   transition: .3s;
+}
+
+.settings .describe .ticks .colors span.red {
+  background-color: red;
+}
+
+.settings .describe .ticks .colors span.blue {
+  background-color: blue;
+}
+
+.settings .describe .ticks .colors span.green {
+  background-color: green;
+}
+
+.settings .describe .ticks .colors span.active {
+  -webkit-box-shadow: 0 0 0 2px white, 0 0 0 4px gray;
+          box-shadow: 0 0 0 2px white, 0 0 0 4px gray;
 }
 
 .instruction p {

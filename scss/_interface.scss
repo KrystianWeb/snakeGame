@@ -47,11 +47,16 @@ body {
     margin: 0 5px;
     cursor: pointer;
 
-    &:hover:after {
+    &.disable {
+      color: gray;
+      cursor: auto;
+    }
+
+    &:not(.disable):hover:after {
       display: block;
     }
 
-    &:after {
+    &:not(.disable):after {
       position: absolute;
       content: attr(data-name);
       display: none;
@@ -69,8 +74,8 @@ body {
 
     @for $i from 1 to length($iconColors)+1 {
 
-      &:nth-child(#{$i}):hover,
-      &.active:nth-child(#{$i}) {
+      &:not(.disable):nth-child(#{$i}):hover,
+      &:not(.disable).active:nth-child(#{$i}) {
         color: nth($iconColors, $i);
       }
     }
@@ -147,13 +152,19 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 250px;
+  width: 350px;
   transform: translate(-50%, -50%);
   padding: 10px;
   text-align: center;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 0 7px 0 grey;
+
+  span {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
 
   &.show {
     display: block;

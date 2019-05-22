@@ -1,3 +1,14 @@
 1. Jak brak localStorage to gdzie zapisywać ustawienia? Czy pobierać każdorazowo dane ze stylów?
 2. Jak zabezpieczyć się przed sytuacją, kiedy ktoś sobie w przeglądarce wyczyści localStorage? (inicjuję obiekt na otwarcie strony i potem nie sprawdzam już jego istnienia tylko pobieram i zapisuję dane)
 3. Responsywność, obsługa na mobilkach - jak to rozwiązać? Obecnie działa to tylko na desktopie.
+4. niektóre rzeczy się ukrywają po rozpoczęciu gry (nadana odpowiednia klasa), czy w momencie trwania gry powinna być przeprowadzana dodatkowa walidacja na wszystkich klikalnych rzeczach? Klasę można w każdej chwili zabrać z DOMu
+
+
+
+
+DO ZROBIENIA
+1. wybór koloru z okna wszystkich kolorów, żeby nie klikać pojedynczo
+2. cały trudny poziom
+3. uporządkować funkcje 
+4. pomysł na grafikę różną dla różnych zakończeń gry
+5. pauza w grze

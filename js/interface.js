@@ -22,7 +22,8 @@ const prepareInterface = function () {
   const iconsForModals = [...document.querySelectorAll('.leftMenu i')];
   const confirmButtons = [...document.querySelectorAll('.modal button.close')];
   //buttons for settings
-  const colorOfSnake = document.querySelector('.settings .ticks .color');
+  const colorsOfSnake = [...document.querySelectorAll('.settings .ticks .colors span')];
+  // const activeColorOfSnake = colorsOfSnake.filter(el => el.classList.contains('active'));
   const speedOfSnake = document.querySelector('.settings .ticks .speed');
   const switches = [...document.querySelectorAll('.settings .ticks .switch input')];
   //get object from localStorage
@@ -31,7 +32,7 @@ const prepareInterface = function () {
 
   const confirmSettings = function () {
     let updateLocalObject = JSON.parse(localStorage.getItem('snakeGame'));
-    updateLocalObject.snakeColor = colorOfSnake.style.backgroundColor;
+    updateLocalObject.snakeColor = colorsOfSnake.filter(el => el.classList.contains('active'))[0].classList[0];
     updateLocalObject.hardOptions = switches.map(el => el.checked);
     updateLocalObject.initialSpeed = speedOfSnake.value;
 
@@ -40,8 +41,9 @@ const prepareInterface = function () {
 
   iconsForModals.forEach((el, index) => {
     el.addEventListener('click', () => {
+      if (el.classList.contains('disable')) return;
       //add class for the right modal and for the icon
-      iconsForModals[index].classList.add('active');
+      el.classList.add('active');
       modals[index].classList.add('show');
       //remove class from other modals and icons
       iconsForModals.filter((el, i) => i != index).forEach(el => el.classList.remove('active'));
@@ -64,11 +66,13 @@ const prepareInterface = function () {
   });
 
   speedOfSnake.value = localObject.initialSpeed;
-  colorOfSnake.style.backgroundColor = localObject.snakeColor;
-  colorOfSnake.addEventListener('click', function () {
-    const availableColors = ['red', 'blue', 'green'];
-    const color = this.style.backgroundColor;
-    this.style.backgroundColor = availableColors[(availableColors.indexOf(color) + 1) % 3];
+  colorsOfSnake.filter(el => el.classList.contains('active'))[0].classList.remove('active');
+  colorsOfSnake.filter(el => el.classList.contains(localObject.snakeColor))[0].classList.add('active');
+  colorsOfSnake.forEach((el, index) => {
+    el.addEventListener('click', () => {
+      colorsOfSnake.filter(el => el.classList.contains('active'))[0].classList.remove('active');
+      el.classList.add('active');
+    })
   });
 
   switches.forEach((el, index) => {
@@ -81,22 +85,6 @@ const prepareInterface = function () {
 const prepareChart = function () {
   const ctx = document.getElementById('myChart').getContext('2d');
   myChart = new Chart(ctx, {
-    plugins: [{
-      beforeInit: function (chart) {
-        chart.data.labels.forEach(function (e, i, a) {
-          if (/-/.test(e)) {
-            a[i] = e.split(/-/);
-          }
-        });
-      },
-      afterUpdate: function (chart) {
-        chart.data.labels.forEach(function (e, i, a) {
-          if (/-/.test(e)) {
-            a[i] = e.split(/-/);
-          }
-        });
-      }
-    }],
     type: 'line',
     data: {
       labels: [],
@@ -142,8 +130,6 @@ const prepareChart = function () {
 //obsługa przycisków zmiany poziomu
 
 //jak dobry wynik (lepszy od besta) to stylizować go;
-
-//multiline na wykresie nie działa, jaki plugin?
 
 //inicjalizacja całości
 (function () {

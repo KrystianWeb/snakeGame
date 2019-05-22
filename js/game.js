@@ -1,12 +1,3 @@
-//pomysły: blokowanie ścian, bomby zabierające punkty i skracające węża, generowanie przeszkód
-
-//localStorage...scores.data
-// {
-//   score: 10,
-//   time: '20.05.2019-19:00',
-//   color: 'red'
-// }
-
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const colorOfBoard = getComputedStyle(canvas).backgroundColor;
@@ -16,10 +7,16 @@ const actualScore = document.querySelector('.scorePanel .score');
 const actualSpeed = document.querySelector('.scorePanel .speed');
 const bestScore = document.querySelector('.scorePanel .best');
 let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval;
+const messagesEndGame = {
+  tail: "tail",
+  bomb: "bomb",
+  wall: "wall",
+  obstacle: "obstacle"
+};
 
-const drawGrid = function (x, y, color) {
+const drawGrid = function (x, y, color, width = 0) {
   context.fillStyle = color;
-  context.fillRect(x + 1, y + 1, gridLength - 2, gridLength - 2);
+  context.fillRect(x + 1 + width, y + 1 + width, gridLength - 2 * (1 + width), gridLength - 2 * (1 + width));
 };
 
 const clearGrid = function (x, y) {
@@ -118,6 +115,16 @@ const checkTail = function () {
   }
 };
 
+const blockMenu = function () {
+  [...document.querySelectorAll('.leftMenu i')].forEach(el => el.classList.add('disable'));
+  document.querySelector('.rightMenu button:not(.active)').style.display = 'none';
+};
+
+const unblockMenu = function () {
+  [...document.querySelectorAll('.leftMenu i')].forEach(el => el.classList.remove('disable'));
+  document.querySelector('.rightMenu button:not(.active)').style.display = '';
+};
+
 const initGame = function () {
   posX = 1 * gridLength; //starting position X of snake
   posY = 1 * gridLength; //starting position Y of snake
@@ -125,9 +132,8 @@ const initGame = function () {
   fruitY = 5 * gridLength; //starting position Y of first fruit
   speedX = 0; //+-1
   speedY = 0; //+-1
-  color = document.querySelector('.settings .ticks .color').style.backgroundColor;
+  color = document.querySelector('.settings .ticks .colors .active').classList[0];
   speedLevel = document.querySelector('.settings .ticks .speed').value; //actual speed from settings
-  document.querySelector('.scorePanel .speed').innerHTML = speedLevel;
   gameSpeed = 150 * (0.9 ** (speedLevel - 1));
   changeDirection = false;
   score = 0; //actual score
@@ -136,6 +142,9 @@ const initGame = function () {
     x: posX,
     y: posY
   }];
+  document.querySelector('.scorePanel .speed').innerHTML = speedLevel;
+  document.querySelector('.gameArea .result p').innerHTML = ""; //clear result div - it will be completed at the end of the game
+  blockMenu();
 
   context.fillStyle = colorOfBoard;
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -144,24 +153,43 @@ const initGame = function () {
   interval = setInterval(playGame, gameSpeed);
 };
 
-const endGame = function () {
-  clearInterval(interval);
-  document.querySelector('.gameArea .result').classList.add('show');
-  document.querySelector('.gameArea .result p').innerHTML = `Your score is ${score}`;
-  document.querySelector('.gameArea .result button').innerHTML = 'reset game';
-
+const updateLocalStorage = function () {
+  let updateLocalObject = JSON.parse(localStorage.getItem('snakeGame'));
+  let actualDate = new Date();
+  updateLocalObject.scores.data.push({
+    score: score,
+    time: [`${actualDate.toLocaleDateString().slice(0,5)} '${actualDate.toLocaleDateString().slice(-2)}`, actualDate.toLocaleTimeString().slice(0, -3)],
+    color: color
+  });
   if (score > bestScore.innerHTML) {
     bestScore.innerHTML = score;
-    //update localStorage
-    let updateLocalObject = JSON.parse(localStorage.getItem('snakeGame'));
     updateLocalObject.scores.maxScore = score;
-    updateLocalObject.scores.data.push({
-      score: score,
-      time: '20.05.2019-19:00',
-      color: color
-    });
-    localStorage.setItem('snakeGame', JSON.stringify(updateLocalObject))
-  }
+  };
+  //keep only last 10 scores (inclugind the best one)
+  if (updateLocalObject.scores.data.length > 10) {
+    let lastScoreDeleted = false,
+      scoreIndex = 0;
+    while (!lastScoreDeleted) {
+      if (updateLocalObject.scores.data[scoreIndex].score < bestScore.innerHTML) {
+        updateLocalObject.scores.data.splice(scoreIndex, 1);
+        lastScoreDeleted = true
+      } else scoreIndex++
+    }
+  };
+
+  localStorage.setItem('snakeGame', JSON.stringify(updateLocalObject))
+};
+
+const endGame = function (message) {
+  clearInterval(interval);
+  unblockMenu();
+  updateLocalStorage();
+
+  document.querySelector('.gameArea .result').classList.add('show');
+  if (score == bestScore.innerHTML)
+    document.querySelector('.gameArea .result p').innerHTML += `<span>This is your best result!!!</span>`;
+  document.querySelector('.gameArea .result p').innerHTML += `Your score is ${score}`;
+  document.querySelector('.gameArea .result button').innerHTML = 'reset game';
 };
 
 const playGame = function () {
@@ -171,8 +199,14 @@ const playGame = function () {
   changeDirection = false;
   moveSnake();
 
-  for (let i = 0; i < tail.length; i++)
+  for (let i = 0; i < Math.min(tail.length - 1, 5); i++) { //draw end of the tile with smaller grids
+    clearGrid(tail[i].x, tail[i].y);
+    let width = Math.min(tail.length - 1, 5) - i;
+    drawGrid(tail[i].x, tail[i].y, color, width);
+  };
+  for (let i = Math.min(tail.length - 1, 5); i < tail.length; i++) {
     drawGrid(tail[i].x, tail[i].y, color);
+  };
   drawFruit(fruitX, fruitY);
 
   checkTail();
