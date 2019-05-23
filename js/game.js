@@ -7,12 +7,6 @@ const actualScore = document.querySelector('.scorePanel .score');
 const actualSpeed = document.querySelector('.scorePanel .speed');
 const bestScore = document.querySelector('.scorePanel .best');
 let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval;
-const messagesEndGame = {
-  tail: "tail",
-  bomb: "bomb",
-  wall: "wall",
-  obstacle: "obstacle"
-};
 
 const drawGrid = function (x, y, color, width = 0) {
   context.fillStyle = color;
@@ -133,7 +127,7 @@ const initGame = function () {
   speedX = 0; //+-1
   speedY = 0; //+-1
   color = document.querySelector('.settings .ticks .colors .active').classList[0];
-  speedLevel = document.querySelector('.settings .ticks .speed').value; //actual speed from settings
+  speedLevel = document.querySelector('.settings .ticks .speed input[type=range]').value; //actual speed from settings
   gameSpeed = 150 * (0.9 ** (speedLevel - 1));
   changeDirection = false;
   score = 0; //actual score
@@ -158,7 +152,7 @@ const updateLocalStorage = function () {
   let actualDate = new Date();
   updateLocalObject.scores.data.push({
     score: score,
-    time: [`${actualDate.toLocaleDateString().slice(0,5)} '${actualDate.toLocaleDateString().slice(-2)}`, actualDate.toLocaleTimeString().slice(0, -3)],
+    time: [`${actualDate.toLocaleDateString().slice(0,5)}.${actualDate.toLocaleDateString().slice(-2)}`, actualDate.toLocaleTimeString().slice(0, -3)],
     color: color
   });
   if (score > bestScore.innerHTML) {

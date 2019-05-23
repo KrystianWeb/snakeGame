@@ -2,13 +2,14 @@
 2. Jak zabezpieczyć się przed sytuacją, kiedy ktoś sobie w przeglądarce wyczyści localStorage? (inicjuję obiekt na otwarcie strony i potem nie sprawdzam już jego istnienia tylko pobieram i zapisuję dane)
 3. Responsywność, obsługa na mobilkach - jak to rozwiązać? Obecnie działa to tylko na desktopie.
 4. niektóre rzeczy się ukrywają po rozpoczęciu gry (nadana odpowiednia klasa), czy w momencie trwania gry powinna być przeprowadzana dodatkowa walidacja na wszystkich klikalnych rzeczach? Klasę można w każdej chwili zabrać z DOMu
+5. jak testować na różnych wersjach przeglądarek? BrowserStack płatny, taki mini projekcik raczej nie podejdzie pod wersję free dla open sourcowych projektów?
 
 
 
 
 DO ZROBIENIA
 1. wybór koloru z okna wszystkich kolorów, żeby nie klikać pojedynczo
-2. cały trudny poziom
+2. cały trudny poziom + obsługa przycisków zmiany poziomu
 3. uporządkować funkcje 
 4. pomysł na grafikę różną dla różnych zakończeń gry
 5. pauza w grze

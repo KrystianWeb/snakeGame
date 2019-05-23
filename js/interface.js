@@ -24,7 +24,8 @@ const prepareInterface = function () {
   //buttons for settings
   const colorsOfSnake = [...document.querySelectorAll('.settings .ticks .colors span')];
   // const activeColorOfSnake = colorsOfSnake.filter(el => el.classList.contains('active'));
-  const speedOfSnake = document.querySelector('.settings .ticks .speed');
+  const speedOfSnake = document.querySelector('.settings .ticks .speed input[type=range]');
+  const speedText = document.querySelector('.settings .ticks .speed input[type=text]');
   const switches = [...document.querySelectorAll('.settings .ticks .switch input')];
   //get object from localStorage
   const localObject = JSON.parse(localStorage.getItem('snakeGame'));
@@ -66,6 +67,11 @@ const prepareInterface = function () {
   });
 
   speedOfSnake.value = localObject.initialSpeed;
+  speedText.value = localObject.initialSpeed;
+  speedOfSnake.addEventListener('input', () => {
+    speedText.value = speedOfSnake.value;
+  }); //'change' dla edge? opera?
+
   colorsOfSnake.filter(el => el.classList.contains('active'))[0].classList.remove('active');
   colorsOfSnake.filter(el => el.classList.contains(localObject.snakeColor))[0].classList.add('active');
   colorsOfSnake.forEach((el, index) => {
@@ -127,11 +133,6 @@ const prepareChart = function () {
   });
 };
 
-//obsługa przycisków zmiany poziomu
-
-//jak dobry wynik (lepszy od besta) to stylizować go;
-
-//inicjalizacja całości
 (function () {
   //prepare object in localStorage for first run of game
   if (!localStorage.getItem('snakeGame')) {

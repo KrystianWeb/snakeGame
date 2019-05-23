@@ -63,7 +63,12 @@
     flex-direction: column;
 
     >* {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
       flex-basis: 20px;
+      // line-height: 20px;
       padding: 5px 10px;
     }
 
@@ -82,10 +87,14 @@
     align-items: center;
     flex-grow: 1;
 
+    >* {
+      justify-content: center;
+    }
+
     .colors {
       display: flex;
       width: 100%;
-      justify-content: space-evenly;
+      justify-content: space-around;
 
       span {
         display: block;
@@ -112,6 +121,30 @@
         &.active {
           box-shadow: 0 0 0 2px white, 0 0 0 4px gray;
         }
+      }
+    }
+
+    .speed {
+      position: relative;
+      width: 100%;
+
+      input[type=text] {
+        position: absolute;
+        top: 50%;
+        left: -20px;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        color: black;
+        border: none;
+        border-radius: 50%;
+        outline: none;
+        font-size: 1.1rem;
+        font-weight: bold;
+        user-select: none;
+        background-color: #e6e6e6;
       }
     }
   }

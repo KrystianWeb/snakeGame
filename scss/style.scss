@@ -1,5 +1,5 @@
 $mainColor: #92D5D6;
-$gameSize: 500px;
+$gameSize: 500px; //must be edit in canvas style in html too
 $iconColors: (red, blue, yellow);
 $bgcModal: #fff;
 $switchred: #FF4651;
@@ -7,7 +7,7 @@ $switchgreen: #48EA8B;
 
 @import 'interface';
 @import 'modals';
-// @import 'inputRange';
+@import 'inputRange';
 
 #canvas {
   border: 2px solid black;
