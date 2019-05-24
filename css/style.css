@@ -9,7 +9,8 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
   background-image: url("../img/background.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -224,6 +225,40 @@ body {
   color: white;
 }
 
+@media (max-width: 900px) {
+  .scorePanel {
+    -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+    top: 100%;
+    left: 2px;
+    margin-left: 0;
+    margin-top: 10px;
+    width: 500px;
+    height: 20px;
+    padding: 7px 0;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .scorePanel > div {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 0 5px;
+  }
+  .scorePanel p {
+    font-size: 1.4rem;
+  }
+  .scorePanel p span {
+    width: 50px;
+  }
+}
+
 .modal {
   display: none;
   position: absolute;
@@ -339,9 +374,8 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  -ms-flex-preferred-size: 35%;
+      flex-basis: 35%;
 }
 
 .settings .describe .ticks > * {
@@ -610,7 +644,9 @@ body {
 
 input[type=range] {
   -webkit-appearance: none;
-  width: 100%;
+  border: 1px solid white;
+  width: 150px;
+  /*hide the outline behind the border*/
 }
 
 input[type=range]:focus {
@@ -618,84 +654,83 @@ input[type=range]:focus {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-  background: #e6e6e6;
-  border-radius: 5px;
-  border: 0 solid #000;
+  width: 150px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
 }
 
 input[type=range]::-webkit-slider-thumb {
-  border: 0 solid #000;
-  height: 18px;
-  width: 18px;
+  border: none;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  background: #3cd7d7;
-  cursor: pointer;
+  background: goldenrod;
   -webkit-appearance: none;
-  margin-top: -5px;
+  margin-top: -6px;
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #e6e6e6;
+  background: #ccc;
 }
 
 input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-  background: #e6e6e6;
-  border-radius: 5px;
-  border: 0 solid #000;
+  width: 150px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
 }
 
 input[type=range]::-moz-range-thumb {
-  border: 0 solid #000;
-  height: 18px;
-  width: 18px;
+  border: none;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  background: #3cd7d7;
-  cursor: pointer;
+  background: goldenrod;
+}
+
+input[type=range]:-moz-focusring {
+  outline: 1px solid white;
+  outline-offset: -1px;
 }
 
 input[type=range]::-ms-track {
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
+  width: 150px;
+  height: 5px;
   background: transparent;
+  /*leave room for the larger thumb to overflow with a transparent border*/
   border-color: transparent;
+  border-width: 2px 0;
   color: transparent;
 }
 
 input[type=range]::-ms-fill-lower {
-  background: #e6e6e6;
-  border: 0 solid #000;
-  border-radius: 10px;
+  background: #777;
+  border-radius: 3px;
 }
 
 input[type=range]::-ms-fill-upper {
-  background: #e6e6e6;
-  border: 0 solid #000;
-  border-radius: 10px;
+  background: #ddd;
+  border-radius: 3px;
 }
 
 input[type=range]::-ms-thumb {
-  border: 0 solid #000;
-  height: 18px;
-  width: 18px;
+  border: none;
+  height: 15px;
+  width: 15px;
   border-radius: 50%;
-  background: #3cd7d7;
-  cursor: pointer;
-  height: 8px;
+  background: goldenrod;
+  margin-top: -2px;
 }
 
 input[type=range]:focus::-ms-fill-lower {
-  background: #e6e6e6;
+  background: #888;
 }
 
 input[type=range]:focus::-ms-fill-upper {
-  background: #e6e6e6;
+  background: #ccc;
 }
 
 #canvas {

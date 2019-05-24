@@ -152,7 +152,8 @@ const updateLocalStorage = function () {
   let actualDate = new Date();
   updateLocalObject.scores.data.push({
     score: score,
-    time: [`${actualDate.toLocaleDateString().slice(0,5)}.${actualDate.toLocaleDateString().slice(-2)}`, actualDate.toLocaleTimeString().slice(0, -3)],
+    time: [`${(actualDate.getDate()+"").padStart(2,0)}.${(actualDate.getMonth()+1+"").padStart(2,0)}.${(actualDate.getFullYear()+"").slice(-2)}`, `${actualDate.getHours()}:${actualDate.getMinutes()}`],
+    //time: [`${actualDate.toLocaleDateString().slice(0,5)}.${actualDate.toLocaleDateString().slice(-2)}`, actualDate.toLocaleTimeString().slice(0, -3)], - NOT WORKING ON EDGE??
     color: color
   });
   if (score > bestScore.innerHTML) {

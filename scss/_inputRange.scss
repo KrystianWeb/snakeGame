@@ -1,122 +1,95 @@
-$thumb-color: #3cd7d7;
-$thumb-radius: 50%;
-$thumb-height: 18px;
-$thumb-width: 18px;
+$track-width: 150px;
+$track-height: 5px;
+$track-background: #ddd;
+$thumb-background: goldenrod;
+$thumb-width: 16px;
+$thumb-height: 16px;
 
-// $thumb-shadow-size: 0;
-// $thumb-shadow-blur: 0;
-// $thumb-shadow-color: #000;
-
-$thumb-border-width: 0;
-$thumb-border-color: #000;
-
-$track-width: 100%;
-$track-color: #e6e6e6;
-$track-height: 8px;
-
-// $track-shadow-size: 0;
-// $track-shadow-blur: 0;
-// $track-shadow-color: #000;
-
-$track-border-width: 0;
-$track-border-color: #000;
-
-$track-radius: 5px;
-$contrast: 0%;
-
-// @mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
-//   box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0px 0px $shadow-size lighten($shadow-color, 5%);
-// }
-
-@mixin track() {
-  width: $track-width;
-  height: $track-height;
-  cursor: pointer;
+@mixin thumb($width, $height, $background) {
+  border: none;
+  height: $height;
+  width: $width;
+  border-radius: 50%;
+  background: $background;
 }
 
-@mixin thumb() {
-  // @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
-  border: $thumb-border-width solid $thumb-border-color;
-  height: $thumb-height;
-  width: $thumb-width;
-  border-radius: $thumb-radius;
-  background: $thumb-color;
-  cursor: pointer;
+@mixin track ($width, $height, $background, $ifEdge) {
+  width: $width;
+  height: $height;
+
+  @if $ifEdge==false {
+    background: $background;
+    border: none;
+    border-radius: 3px;
+  }
 }
 
 input[type=range] {
-  -webkit-appearance: none;
-  width: $track-width;
-  // margin: ($thumb-height - $track-height) * 2 0;
-  // margin: ($thumb-height - $track-height) / 2 0;
+  -webkit-appearance: none; //removes default webkit styles
+  border: 1px solid white; //fix for FF unable to apply focus style bug
+  width: $track-width; //required for proper track sizing in FF
 
   &:focus {
     outline: none;
   }
 
   &::-webkit-slider-runnable-track {
-    @include track();
-    // @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border-radius: $track-radius;
-    border: $track-border-width solid $track-border-color;
+    @include track($track-width, $track-height, $track-background, false);
   }
 
   &::-webkit-slider-thumb {
-    @include thumb();
+    @include thumb($thumb-width, $thumb-height, $thumb-background);
     -webkit-appearance: none;
-    margin-top: (-$track-border-width + $track-height / 2) - ($thumb-height / 2);
+    margin-top: -6px;
   }
 
   &:focus::-webkit-slider-runnable-track {
-    background: lighten($track-color, $contrast);
+    background: #ccc;
   }
 
   &::-moz-range-track {
-    @include track();
-    // @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border-radius: $track-radius;
-    border: $track-border-width solid $track-border-color;
+    @include track($track-width, $track-height, $track-background, false);
   }
 
   &::-moz-range-thumb {
-    @include thumb();
+    @include thumb($thumb-width, $thumb-height, $thumb-background);
+  }
+
+  /*hide the outline behind the border*/
+  &:-moz-focusring {
+    outline: 1px solid white;
+    outline-offset: -1px;
   }
 
   &::-ms-track {
-    @include track();
-    background: transparent;
+    @include track($track-width, $track-height, $track-background, true);
+    background: transparent; //remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead
+    /*leave room for the larger thumb to overflow with a transparent border*/
     border-color: transparent;
-    // border-width: $thumb-width 0;
-    // margin-top: -15px;
-    color: transparent;
+    border-width: 2px 0;
+    color: transparent; //remove default tick marks
   }
 
   &::-ms-fill-lower {
-    background: darken($track-color, $contrast);
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius*2;
-    // @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: #777;
+    border-radius: 3px;
   }
 
   &::-ms-fill-upper {
-    background: $track-color;
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius*2;
-    // @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: #ddd;
+    border-radius: 3px;
   }
 
   &::-ms-thumb {
-    @include thumb();
-    height: min($track-height, $thumb-height);
+    @include thumb($thumb-width - 1, $thumb-height - 1, $thumb-background);
+    margin-top: -2px;
   }
 
   &:focus::-ms-fill-lower {
-    background: $track-color;
+    background: #888;
   }
 
   &:focus::-ms-fill-upper {
-    background: lighten($track-color, $contrast);
+    background: #ccc;
   }
 }

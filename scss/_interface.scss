@@ -9,7 +9,8 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
   background-image: url('../img/background.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -189,6 +190,35 @@ body {
     &:hover {
       background-color: blue;
       color: white;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .scorePanel {
+    box-sizing: content-box;
+    top: 100%;
+    left: 2px;
+    margin-left: 0;
+    margin-top: 10px;
+    width: $gameSize;
+    height: 20px;
+    padding: 7px 0;
+
+    flex-direction: row;
+
+    >div {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 5px;
+    }
+
+    p {
+      font-size: 1.4rem;
+
+      span {
+        width: 50px;
+      }
     }
   }
 }
