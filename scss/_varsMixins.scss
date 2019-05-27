@@ -1,0 +1,301 @@
+$mainColor: #92D5D6;
+$gameSize: 500px; //must be edit in canvas style in html too
+$iconColors: (red, blue, yellow);
+$bgcModal: #fff;
+$switchred: #FF4651;
+$switchgreen: #48EA8B;
+
+// for the input range-------------------
+$track-width: 150px;
+$track-height: 5px;
+$track-background: #ddd;
+$thumb-background: goldenrod;
+$thumb-width: 16px;
+$thumb-height: 16px;
+
+@mixin thumb($width, $height, $background) {
+  border: none;
+  height: $height;
+  width: $width;
+  border-radius: 50%;
+  background: $background;
+}
+
+@mixin track ($width, $height, $background, $ifEdge) {
+  width: $width;
+  height: $height;
+
+  @if $ifEdge==false {
+    background: $background;
+    border: none;
+    border-radius: 3px;
+  }
+}
+
+@mixin inputRange() {
+  -webkit-appearance: none; //removes default webkit styles
+  border: 1px solid white; //fix for FF unable to apply focus style bug
+  width: $track-width; //required for proper track sizing in FF
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track($track-width, $track-height, $track-background, false);
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb($thumb-width, $thumb-height, $thumb-background);
+    -webkit-appearance: none;
+    margin-top: -6px;
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+  }
+
+  &::-moz-range-track {
+    @include track($track-width, $track-height, $track-background, false);
+  }
+
+  &::-moz-range-thumb {
+    @include thumb($thumb-width, $thumb-height, $thumb-background);
+  }
+
+  /*hide the outline behind the border*/
+  &:-moz-focusring {
+    outline: 1px solid white;
+    outline-offset: -1px;
+  }
+
+  &::-ms-track {
+    @include track($track-width, $track-height, $track-background, true);
+    background: transparent; //remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead
+    /*leave room for the larger thumb to overflow with a transparent border*/
+    border-color: transparent;
+    border-width: 2px 0;
+    color: transparent; //remove default tick marks
+  }
+
+  &::-ms-fill-lower {
+    background: #777;
+    border-radius: 3px;
+  }
+
+  &::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 3px;
+  }
+
+  &::-ms-thumb {
+    @include thumb($thumb-width - 1, $thumb-height - 1, $thumb-background);
+    margin-top: -2px;
+  }
+
+  &:focus::-ms-fill-lower {
+    background: #888;
+  }
+
+  &:focus::-ms-fill-upper {
+    background: #ccc;
+  }
+}
+
+//----------------------------------------
+//for the switches
+@keyframes blob {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.12, .94);
+  }
+
+  60% {
+    transform: scale(.96, 1.06);
+  }
+}
+
+@keyframes blobChecked {
+  0% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  30% {
+    transform: scaleX(1.44);
+  }
+
+  70% {
+    transform: scaleX(1.18);
+  }
+
+  50%,
+  99% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+@mixin switch() {
+  cursor: pointer;
+
+  * {
+    box-sizing: border-box;
+
+    &:before,
+    &:after {
+      box-sizing: border-box;
+    }
+  }
+
+  input {
+    display: none;
+
+    &+span {
+      width: 40px;
+      height: 20px;
+      border-radius: 14px;
+      transition: all .3s ease;
+      display: block;
+      position: relative;
+      background: $switchred;
+      box-shadow: 0 8px 16px -1px rgba($switchred, .2);
+
+      &:before,
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        transition: all .3s ease;
+      }
+
+      &:before {
+        top: 3px;
+        left: 3px;
+        width: 14px;
+        height: 14px;
+        border-radius: 9px;
+        border: 4px solid #fff;
+      }
+
+      &:after {
+        top: 3px;
+        left: 30px;
+        width: 6px;
+        height: 14px;
+        border-radius: 40%;
+        transform-origin: 50% 50%;
+        background: #fff;
+        opacity: 0;
+      }
+
+      &:active {
+        transform: scale(.92);
+      }
+    }
+
+    &:checked {
+      &+span {
+        background: $switchgreen;
+        box-shadow: 0 8px 16px -1px rgba($switchgreen, .2);
+
+        &:before {
+          width: 0px;
+          border-radius: 3px;
+          margin-left: 27px;
+          border-width: 3px;
+          background: #fff;
+        }
+
+        &:after {
+          animation: blobChecked .35s linear forwards .2s;
+        }
+      }
+    }
+
+    &:not(:checked) {
+      &+span {
+        &:before {
+          animation: blob .85s linear forwards .2s;
+        }
+      }
+    }
+  }
+}
+
+//----------------------------------------
+
+@mixin modal() {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0 7px 0 grey;
+
+  flex-direction: column;
+
+  &.modal--show {
+    display: flex;
+  }
+
+  &__header,
+  &__footer {
+    position: relative;
+    flex-basis: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+  }
+
+  &__body {
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    padding: 10px 15px;
+    font-size: 1.4rem;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__btn {
+    background-color: white;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 0 0 5px 1px lightgrey;
+    cursor: pointer;
+    margin-left: 10px;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: blue;
+      color: white;
+      font-weight: bold;
+    }
+  }
+
+  .paragraph {
+    padding-bottom: 10px;
+
+    &--bold {
+      font-weight: bold;
+    }
+  }
+}

@@ -17,7 +17,7 @@ body {
   background-size: cover;
 }
 
-.gameArea {
+.game-area {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -38,30 +38,30 @@ body {
   display: flex;
   justify-content: space-between;
 
-  .leftMenu {
+  &__left {
     display: flex;
   }
 
-  i {
+  &__icon {
     position: relative;
     font-size: 2rem;
     margin: 0 5px;
     cursor: pointer;
 
-    &.disable {
+    &--disable {
       color: gray;
       cursor: auto;
     }
 
-    &:not(.disable):hover:after {
+    &:not(.menu__icon--disable):hover:after {
       display: block;
     }
 
-    &:not(.disable):after {
+    &:not(.menu__icon--disable):after {
       position: absolute;
       content: attr(data-name);
       display: none;
-      top: -30px;
+      top: 30px;
       left: -5px;
       padding: 5px;
       background-color: black;
@@ -75,14 +75,14 @@ body {
 
     @for $i from 1 to length($iconColors)+1 {
 
-      &:not(.disable):nth-child(#{$i}):hover,
-      &:not(.disable).active:nth-child(#{$i}) {
+      &:not(.menu__icon--disable):nth-child(#{$i}):hover,
+      &--active:not(.menu__icon--disable):nth-child(#{$i}) {
         color: nth($iconColors, $i);
       }
     }
   }
 
-  button {
+  &__btn {
     display: inline-block;
     background-color: white;
     border: none;
@@ -95,22 +95,22 @@ body {
     outline: none;
     cursor: pointer;
 
-    &:nth-child(1).active {
+    &--active:nth-of-type(1) {
       background-color: blue;
       color: white;
     }
 
-    &:nth-child(2).active {
+    &--active:nth-of-type(2) {
       background-color: red;
       color: white;
     }
   }
 }
 
-.scorePanel {
+.score-panel {
   box-sizing: border-box;
   position: absolute;
-  top: 0;
+  top: 2px;
   left: 100%;
   background-color: $mainColor;
   margin-left: 10px;
@@ -124,26 +124,29 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  >div {
+  &__current-game,
+  &__best-game {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  p {
+  &__text,
+  &__value {
     text-align: center;
     padding: 5px;
     font-size: 1.6rem;
     font-weight: bold;
+  }
 
-    span {
-      display: block;
-      background-color: darken($mainColor, 20%);
-      border-radius: 10px;
-      width: 80px;
-      padding: 2px 0;
-      color: white;
-    }
+  &__value {
+    display: block;
+    background-color: darken($mainColor, 20%);
+    border-radius: 10px;
+    width: 80px;
+    padding: 2px 0;
+    margin: 5px;
+    color: white;
   }
 }
 
@@ -161,22 +164,22 @@ body {
   background-color: white;
   box-shadow: 0 0 7px 0 grey;
 
-  span {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-
-  &.show {
+  &--show {
     display: block;
   }
 
-  p {
+  &__paragraph {
     margin-bottom: 10px;
     font-size: 1.6rem;
+
+    &--bold {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
   }
 
-  .startGame {
+  &__btn {
     background-color: $mainColor;
     border: none;
     outline: none;
@@ -195,7 +198,7 @@ body {
 }
 
 @media (max-width: 900px) {
-  .scorePanel {
+  .score-panel {
     box-sizing: content-box;
     top: 100%;
     left: 2px;
@@ -207,18 +210,19 @@ body {
 
     flex-direction: row;
 
-    >div {
+    &__current-game,
+    &__best-game {
       flex-direction: row;
       justify-content: space-between;
       padding: 0 5px;
     }
 
-    p {
+    &__paragraph {
       font-size: 1.4rem;
+    }
 
-      span {
-        width: 50px;
-      }
+    &__value {
+      width: 50px;
     }
   }
 }

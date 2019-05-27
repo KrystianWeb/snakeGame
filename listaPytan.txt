@@ -8,8 +8,8 @@
 
 
 DO ZROBIENIA
-1. wybór koloru z okna wszystkich kolorów, żeby nie klikać pojedynczo
+1. DONE - wybór koloru z okna wszystkich kolorów, żeby nie klikać pojedynczo
 2. cały trudny poziom + obsługa przycisków zmiany poziomu
-3. uporządkować funkcje 
+3. DONE - uporządkować funkcje 
 4. pomysł na grafikę różną dla różnych zakończeń gry
 5. pauza w grze

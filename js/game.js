@@ -2,10 +2,10 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const colorOfBoard = getComputedStyle(canvas).backgroundColor;
 const gridLength = 20;
-const startButton = document.querySelector('.gameArea .startGame');
-const actualScore = document.querySelector('.scorePanel .score');
-const actualSpeed = document.querySelector('.scorePanel .speed');
-const bestScore = document.querySelector('.scorePanel .best');
+const startButton = document.querySelector('.result__btn');
+const actualScore = document.querySelector('.js-score');
+const actualSpeed = document.querySelector('.js-speed');
+const bestScore = document.querySelector('.js-best');
 let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval;
 
 const drawGrid = function (x, y, color, width = 0) {
@@ -110,13 +110,13 @@ const checkTail = function () {
 };
 
 const blockMenu = function () {
-  [...document.querySelectorAll('.leftMenu i')].forEach(el => el.classList.add('disable'));
-  document.querySelector('.rightMenu button:not(.active)').style.display = 'none';
+  [...document.querySelectorAll('.menu__icon')].forEach(el => el.classList.add('menu__icon--disable'));
+  document.querySelector('.menu__btn:not(.menu__btn--active)').style.display = 'none';
 };
 
 const unblockMenu = function () {
-  [...document.querySelectorAll('.leftMenu i')].forEach(el => el.classList.remove('disable'));
-  document.querySelector('.rightMenu button:not(.active)').style.display = '';
+  [...document.querySelectorAll('.menu__icon')].forEach(el => el.classList.remove('menu__icon--disable'));
+  document.querySelector('.menu__btn:not(.menu__btn--active)').style.display = '';
 };
 
 const initGame = function () {
@@ -126,8 +126,8 @@ const initGame = function () {
   fruitY = 5 * gridLength; //starting position Y of first fruit
   speedX = 0; //+-1
   speedY = 0; //+-1
-  color = document.querySelector('.settings .ticks .colors .active').classList[0];
-  speedLevel = document.querySelector('.settings .ticks .speed input[type=range]').value; //actual speed from settings
+  color = document.querySelector('.control__color--active').classList.item(0).split('-')[1];
+  speedLevel = document.querySelector('.control__speed-range').value; //actual speed from settings
   gameSpeed = 150 * (0.9 ** (speedLevel - 1));
   changeDirection = false;
   score = 0; //actual score
@@ -136,8 +136,8 @@ const initGame = function () {
     x: posX,
     y: posY
   }];
-  document.querySelector('.scorePanel .speed').innerHTML = speedLevel;
-  document.querySelector('.gameArea .result p').innerHTML = ""; //clear result div - it will be completed at the end of the game
+  actualSpeed.innerHTML = speedLevel;
+  document.querySelector('.result__paragraph').innerHTML = ""; //clear result div - it will be completed at the end of the game
   blockMenu();
 
   context.fillStyle = colorOfBoard;
@@ -152,7 +152,7 @@ const updateLocalStorage = function () {
   let actualDate = new Date();
   updateLocalObject.scores.data.push({
     score: score,
-    time: [`${(actualDate.getDate()+"").padStart(2,0)}.${(actualDate.getMonth()+1+"").padStart(2,0)}.${(actualDate.getFullYear()+"").slice(-2)}`, `${actualDate.getHours()}:${actualDate.getMinutes()}`],
+    time: [`${(actualDate.getDate()+"").padStart(2,0)}.${(actualDate.getMonth()+1+"").padStart(2,0)}.${(actualDate.getFullYear()+"").slice(-2)}`, `${(actualDate.getHours()+"").padStart(2,0)}:${(actualDate.getMinutes()+"").padStart(2,0)}`],
     //time: [`${actualDate.toLocaleDateString().slice(0,5)}.${actualDate.toLocaleDateString().slice(-2)}`, actualDate.toLocaleTimeString().slice(0, -3)], - NOT WORKING ON EDGE??
     color: color
   });
@@ -180,11 +180,11 @@ const endGame = function (message) {
   unblockMenu();
   updateLocalStorage();
 
-  document.querySelector('.gameArea .result').classList.add('show');
+  document.querySelector('.result').classList.add('result--show');
   if (score == bestScore.innerHTML)
-    document.querySelector('.gameArea .result p').innerHTML += `<span>This is your best result!!!</span>`;
-  document.querySelector('.gameArea .result p').innerHTML += `Your score is ${score}`;
-  document.querySelector('.gameArea .result button').innerHTML = 'reset game';
+    document.querySelector('.result__paragraph').innerHTML += `<span class="result__paragraph--bold">This is your best result!!!</span>`;
+  document.querySelector('.result__paragraph').innerHTML += `Your score is ${score}`;
+  document.querySelector('.result__btn').innerHTML = 'reset game';
 };
 
 const playGame = function () {
@@ -208,7 +208,7 @@ const playGame = function () {
 };
 
 startButton.addEventListener('click', function () {
-  document.querySelector('.gameArea .result').classList.remove('show');
+  document.querySelector('.result').classList.remove('result--show');
   initGame();
 });
 document.addEventListener("keydown", keyEvent);

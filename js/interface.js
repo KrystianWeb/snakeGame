@@ -18,22 +18,21 @@ const updateChart = function (chart) {
 
 const prepareInterface = function () {
   //icons for opening modals
-  const modals = [...document.querySelectorAll('.modal')];
-  const iconsForModals = [...document.querySelectorAll('.leftMenu i')];
-  const confirmButtons = [...document.querySelectorAll('.modal button.close')];
+  const modals = [...document.querySelectorAll('.settings, .instruction, .scores')];
+  const iconsForModals = [...document.querySelectorAll('.menu__icon')];
+  const confirmButtons = [...document.querySelectorAll('.js_closeModal')];
   //buttons for settings
-  const colorsOfSnake = [...document.querySelectorAll('.settings .ticks .colors span')];
-  // const activeColorOfSnake = colorsOfSnake.filter(el => el.classList.contains('active'));
-  const speedOfSnake = document.querySelector('.settings .ticks .speed input[type=range]');
-  const speedText = document.querySelector('.settings .ticks .speed input[type=text]');
-  const switches = [...document.querySelectorAll('.settings .ticks .switch input')];
+  const colorsOfSnake = [...document.querySelectorAll('[class^=control__color]')];
+  const speedOfSnake = document.querySelector('.control__speed-range');
+  const speedText = document.querySelector('.control__speed-value');
+  const switches = [...document.querySelectorAll('.control__switch')];
   //get object from localStorage
   const localObject = JSON.parse(localStorage.getItem('snakeGame'));
-  const bestScore = document.querySelector('.scorePanel .best');
+  const bestScore = document.querySelector('.js-best');
 
   const confirmSettings = function () {
     let updateLocalObject = JSON.parse(localStorage.getItem('snakeGame'));
-    updateLocalObject.snakeColor = colorsOfSnake.filter(el => el.classList.contains('active'))[0].classList[0];
+    updateLocalObject.snakeColor = colorsOfSnake.filter(el => el.classList.contains('control__color--active'))[0].classList.item(0).split('-')[1];
     updateLocalObject.hardOptions = switches.map(el => el.checked);
     updateLocalObject.initialSpeed = speedOfSnake.value;
 
@@ -42,15 +41,15 @@ const prepareInterface = function () {
 
   iconsForModals.forEach((el, index) => {
     el.addEventListener('click', () => {
-      if (el.classList.contains('disable')) return;
+      if (el.classList.contains('menu__icon--disable')) return;
       //add class for the right modal and for the icon
-      el.classList.add('active');
-      modals[index].classList.add('show');
+      el.classList.add('menu__icon--active');
+      modals[index].classList.add('modal--show');
       //remove class from other modals and icons
-      iconsForModals.filter((el, i) => i != index).forEach(el => el.classList.remove('active'));
-      modals.filter((el, i) => i != index).forEach(el => el.classList.remove('show'));
+      iconsForModals.filter((el, i) => i != index).forEach(el => el.classList.remove('menu__icon--active'));
+      modals.filter((el, i) => i != index).forEach(el => el.classList.remove('modal--show'));
 
-      if (el.classList.contains('chart'))
+      if (el.classList.contains('js-chart'))
         updateChart(myChart);
     })
   });
@@ -58,10 +57,10 @@ const prepareInterface = function () {
   confirmButtons.forEach((el, index) => {
     el.addEventListener('click', () => {
       //remove class from modal and icon
-      iconsForModals[index].classList.remove('active');
-      modals[index].classList.remove('show');
+      iconsForModals[index].classList.remove('menu__icon--active');
+      modals[index].classList.remove('modal--show');
 
-      if (el.classList.contains('confirm'))
+      if (el.classList.contains('settings__btn'))
         confirmSettings();
     });
   });
@@ -72,12 +71,12 @@ const prepareInterface = function () {
     speedText.value = speedOfSnake.value;
   }); //'change' dla edge? opera?
 
-  colorsOfSnake.filter(el => el.classList.contains('active'))[0].classList.remove('active');
-  colorsOfSnake.filter(el => el.classList.contains(localObject.snakeColor))[0].classList.add('active');
+  colorsOfSnake.filter(el => el.classList.contains('control__color--active'))[0].classList.remove('control__color--active');
+  colorsOfSnake.filter(el => el.classList.contains(`control__color-${localObject.snakeColor}`))[0].classList.add('control__color--active');
   colorsOfSnake.forEach((el, index) => {
     el.addEventListener('click', () => {
-      colorsOfSnake.filter(el => el.classList.contains('active'))[0].classList.remove('active');
-      el.classList.add('active');
+      colorsOfSnake.filter(el => el.classList.contains('control__color--active'))[0].classList.remove('control__color--active');
+      el.classList.add('control__color--active');
     })
   });
 

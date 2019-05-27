@@ -12,110 +12,113 @@
 </head>
 
 <body>
-  <div class="gameArea">
+  <div class="game-area">
     <canvas id="canvas" width="500" height="500">Sorry your browser does not support HTML5</canvas>
     <div class="menu">
-      <div class="leftMenu">
-        <i class="fas fa-cog" data-name="Settings"></i>
-        <i class="fas fa-info-circle" data-name="Instruction"></i>
-        <i class="fas fa-chart-line chart" data-name="Scores"></i>
+      <div class="menu__left">
+        <i class="fas fa-cog menu__icon" data-name="Settings"></i> <!-- menu__icon--disable menu__icon--active -->
+        <i class="fas fa-info-circle menu__icon" data-name="Instruction"></i>
+        <i class="fas fa-chart-line menu__icon js-chart" data-name="Scores"></i>
       </div>
-      <div class="rightMenu">
-        <button class="active">easy</button>
-        <button>hard</button>
-      </div>
-    </div>
-    <div class="scorePanel">
-      <div class="currentGame">
-        <p>Your score</p>
-        <p><span class='score'>0</span></p>
-        <p>Actual speed</p>
-        <p><span class='speed'>0</span></p>
-      </div>
-      <div class="bestGame">
-        <p>Best score</p>
-        <p><span class='best'>101</span></p>
+      <div class="menu__right">
+        <button class="menu__btn menu__btn--active">easy</button>
+        <button class="menu__btn">hard</button>
       </div>
     </div>
-    <div class="result show">
-      <p><span>Welcome to the snake game!</span>Options in the upper menu are available before starting/reseting the
-        game!</p>
-      <button class='startGame'>start</button>
+    <div class="score-panel">
+      <div class="score-panel__current-game">
+        <p class="score-panel__text">Your score</p>
+        <p class='score-panel__value js-score'>0</p>
+        <p class="score-panel__text">Actual speed</p>
+        <p class='score-panel__value js-speed'>0</p>
+      </div>
+      <div class="score-panel__best-game">
+        <p class="score-panel__text">Best score</p>
+        <p class='score-panel__value js-best'>101</p>
+      </div>
+    </div>
+    <div class="result result--show">
+      <p class="result__paragraph"><span class="result__paragraph--bold">Welcome to the snake game!</span>Options in the
+        upper menu are available before starting/reseting the game!</p>
+      <button class='result__btn'>start</button>
     </div>
   </div>
-  <div class="settings modal">
-    <div class="title">
-      <h1>Settings</h1>
+  <div class="settings">
+    <div class="settings__header">
+      <h1 class="settings__title">Settings</h1>
     </div>
-    <div class="describe">
-      <div class="options">
-        <span>Color of snake</span>
-        <span>Initial speed of snake</span>
-        <span class="hardOptions">Options for the hard level</span>
-        <span>Bombs</span>
-        <span>Blocked walls</span>
-        <span>Random obstacles</span>
+    <div class="settings__body">
+      <div class="settings__options">
+        <span class="option">Color of snake</span>
+        <span class="option">Initial speed of snake</span>
+        <span class="option option--hard">Options for the hard level</span>
+        <span class="option">Bombs</span>
+        <span class="option">Blocked walls</span>
+        <span class="option">Random obstacles</span>
       </div>
-      <div class="ticks">
-        <div class="colors">
-          <span class='red active'></span>
-          <span class='blue'></span>
-          <span class='green'></span>
+      <div class="settings__controls">
+        <div class="control control--color">
+          <span class='control__color-red control__color--active'></span>
+          <span class='control__color-blue'></span>
+          <span class='control__color-green'></span>
         </div>
-        <div class="speed">
-          <input type="range" min="1" max="10" step="1">
-          <input type="text" value="1" disabled>
+        <div class="control control--speed">
+          <input class="control__speed-range" type="range" min="1" max="10" step="1">
+          <input class="control__speed-value" type="text" value="1" disabled>
         </div>
-        <div></div>
-        <label class="switch">
-          <input type="checkbox">
+        <div class="control"></div>
+        <label class="control control--switch">
+          <input class="control__switch js-bombs" type="checkbox">
           <span></span>
         </label>
-        <label class="switch">
-          <input type="checkbox">
+        <label class="control control--switch">
+          <input class="control__switch js-walls" type="checkbox">
           <span></span>
         </label>
-        <label class="switch">
-          <input type="checkbox">
+        <label class="control control--switch">
+          <input class="control__switch js-obstacles" type="checkbox">
           <span></span>
         </label>
       </div>
     </div>
-    <div class="buttons">
-      <button class='close confirm'>ok</button>
+    <div class="settings__footer">
+      <button class='settings__btn js_closeModal'>ok</button>
     </div>
   </div>
-  <div class="instruction modal">
-    <div class="title">
-      <h1>Instruction</h1>
+  <div class="instruction">
+    <div class="instruction__header">
+      <h1 class="instruction__title">Instruction</h1>
     </div>
-    <div class="describe">
-      <p>On the easy level this is the classic snake game. You can control the snake by arrows on the keyboard.</p>
-      <p>One fruit gives you one point. Every 10 points the snake will be faster.
+    <div class="instruction__body">
+      <p class="paragraph">On the easy level this is the classic snake game. You can control the snake by arrows on the
+        keyboard.</p>
+      <p class="paragraph">One fruit gives you one point. Every 10 points the snake will be faster.
         <hr>
       </p>
-      <p>On the hard level you can turn on additional options in settings.</p>
-      <p><span>Bombs</span> - eating a bomb removes 5 points. The bombs will show once a minute.</p>
-      <p><span>Blocked walls</span> - the attempt at going through the walls ends the game.</p>
-      <p><span>Random obstacles</span> - at the beginning of the game random obstacles will be added to the board.
+      <p class="paragraph">On the hard level you can turn on additional options in settings.</p>
+      <p class="paragraph"><span class="paragraph--bold">Bombs</span> - eating a bomb removes 5 points. The bombs will
+        show once a minute.</p>
+      <p class="paragraph"><span class="paragraph--bold">Blocked walls</span> - the attempt at going through the walls
+        ends the game.</p>
+      <p class="paragraph"><span class="paragraph--bold">Random obstacles</span> - at the beginning of the game random
+        obstacles will be added to the board.
         Hitting them ends the game.</p>
     </div>
-    <div class="buttons">
-      <button class='close'>ok</button>
+    <div class="instruction__footer">
+      <button class='instruction__btn js_closeModal'>ok</button>
     </div>
   </div>
-  <div class="scores modal">
-    <div class="title">
-      <h1>Scores</h1>
+  <div class="scores">
+    <div class="scores__header">
+      <h1 class="scores__title">Scores</h1>
     </div>
-    <div class="describe">
-      <p>Chart shows last 10 scores (including the best result) with upper line for max score. Color of the point
-        indicates what color the snake was
-        during the game.</p>
+    <div class="scores__body">
+      <p class="paragraph">Chart shows last 10 scores (including the best result) with upper line for max score. Color
+        of the point indicates what color the snake was during the game.</p>
       <canvas id="myChart" width="600" height="350"></canvas>
     </div>
-    <div class="buttons">
-      <button class='close'>ok</button>
+    <div class="scores__footer">
+      <button class='scores__btn js_closeModal'>ok</button>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
