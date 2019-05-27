@@ -34,6 +34,13 @@ const prepareInterface = function () {
     let updateLocalObject = JSON.parse(localStorage.getItem('snakeGame'));
     updateLocalObject.snakeColor = colorsOfSnake.filter(el => el.classList.contains('control__color--active'))[0].classList.item(0).split('-')[1];
     updateLocalObject.hardOptions = switches.map(el => el.checked);
+    if (switches.filter(el => el.checked).length) {
+      document.querySelector('.js-easy').classList.remove('menu__btn--active');
+      document.querySelector('.js-hard').classList.add('menu__btn--active');
+    } else {
+      document.querySelector('.js-easy').classList.add('menu__btn--active');
+      document.querySelector('.js-hard').classList.remove('menu__btn--active');
+    };
     updateLocalObject.initialSpeed = speedOfSnake.value;
 
     localStorage.setItem('snakeGame', JSON.stringify(updateLocalObject))
@@ -83,6 +90,13 @@ const prepareInterface = function () {
   switches.forEach((el, index) => {
     localObject.hardOptions[index] ? el.checked = true : el.checked = false;
   });
+  if (switches.filter(el => el.checked).length) {
+    document.querySelector('.js-easy').classList.remove('menu__btn--active');
+    document.querySelector('.js-hard').classList.add('menu__btn--active');
+  } else {
+    document.querySelector('.js-easy').classList.add('menu__btn--active');
+    document.querySelector('.js-hard').classList.remove('menu__btn--active');
+  };
 
   bestScore.innerHTML = localObject.scores.maxScore;
 }

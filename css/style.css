@@ -181,7 +181,7 @@ body {
 }
 
 .menu__btn {
-  display: inline-block;
+  display: none;
   background-color: white;
   border: none;
   text-transform: uppercase;
@@ -191,17 +191,19 @@ body {
   font-weight: bold;
   color: black;
   outline: none;
-  cursor: pointer;
+}
+
+.menu__btn--active {
+  display: inline-block;
+  color: white;
 }
 
 .menu__btn--active:nth-of-type(1) {
   background-color: blue;
-  color: white;
 }
 
 .menu__btn--active:nth-of-type(2) {
   background-color: red;
-  color: white;
 }
 
 .score-panel {
@@ -422,6 +424,11 @@ body {
 
 .settings .paragraph--bold {
   font-weight: bold;
+}
+
+.settings .paragraph img {
+  width: 14px;
+  height: 14px;
 }
 
 .settings__body {
@@ -812,6 +819,11 @@ body {
   font-weight: bold;
 }
 
+.instruction .paragraph img {
+  width: 14px;
+  height: 14px;
+}
+
 .scores {
   display: none;
   position: absolute;
@@ -889,6 +901,11 @@ body {
 
 .scores .paragraph--bold {
   font-weight: bold;
+}
+
+.scores .paragraph img {
+  width: 14px;
+  height: 14px;
 }
 
 #canvas {

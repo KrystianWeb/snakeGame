@@ -2,30 +2,13 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const colorOfBoard = getComputedStyle(canvas).backgroundColor;
 const gridLength = 20;
+const amountOfObstacles = 10;
 const startButton = document.querySelector('.result__btn');
 const actualScore = document.querySelector('.js-score');
 const actualSpeed = document.querySelector('.js-speed');
 const bestScore = document.querySelector('.js-best');
-let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval;
-
-const drawGrid = function (x, y, color, width = 0) {
-  context.fillStyle = color;
-  context.fillRect(x + 1 + width, y + 1 + width, gridLength - 2 * (1 + width), gridLength - 2 * (1 + width));
-};
-
-const clearGrid = function (x, y) {
-  context.fillStyle = colorOfBoard;
-  context.fillRect(x, y, gridLength, gridLength);
-};
-
-const drawFruit = function (x, y) {
-  context.beginPath();
-  context.fillStyle = "orange";
-  context.strokeStyle = "black";
-  context.arc(x + gridLength / 2, y + gridLength / 2, gridLength / 3, 0, 2 * Math.PI, false);
-  context.fill();
-  context.stroke();
-};
+const switches = [...document.querySelectorAll('.control__switch')];
+let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval, bombs, walls, obstacles, obstaclesArray, stopGame;
 
 const keyEvent = function (button) {
   if (!changeDirection) {
@@ -51,22 +34,6 @@ const keyEvent = function (button) {
   }
 };
 
-const fruitUpdate = function () {
-  fruitX = Math.floor(Math.random() * 20) * gridLength;
-  fruitY = Math.floor(Math.random() * 20) * gridLength;
-  checkFruit();
-};
-
-const checkFruit = function () {
-  for (let i = 0; i < tail.length; i++) {
-    if (tail[i].x == fruitX && tail[i].y == fruitY) {
-      fruitUpdate();
-      return;
-    }
-  };
-  drawFruit(fruitX, fruitY);
-};
-
 const setNewInterval = function () {
   clearInterval(interval);
   gameSpeed = gameSpeed * (9 / 10);
@@ -75,11 +42,129 @@ const setNewInterval = function () {
   actualSpeed.innerHTML = speedLevel;
 }
 
+const drawGrid = function (x, y, color, width = 0) {
+  context.fillStyle = color;
+  context.fillRect(x + 1 + width, y + 1 + width, gridLength - 2 * (1 + width), gridLength - 2 * (1 + width));
+};
+
+const clearGrid = function (x, y) {
+  context.fillStyle = colorOfBoard;
+  context.fillRect(x, y, gridLength, gridLength);
+};
+
+const drawFruit = function (x, y) {
+  context.beginPath();
+  context.fillStyle = "orange";
+  context.strokeStyle = "black";
+  context.arc(x + gridLength / 2, y + gridLength / 2, gridLength / 3, 0, 2 * Math.PI, false);
+  context.fill();
+  context.stroke();
+};
+
+const fruitUpdate = function () {
+  fruitX = Math.floor(Math.random() * 20) * gridLength;
+  fruitY = Math.floor(Math.random() * 20) * gridLength;
+  checkFruit();
+};
+
+const checkFruit = function () {
+  if (tail.filter(el => el.x == fruitX && el.y == fruitY).length)
+    fruitUpdate()
+  else if (obstaclesArray.filter(el => el.x == fruitX && el.y == fruitY).length)
+    fruitUpdate()
+  else
+    drawFruit(fruitX, fruitY);
+};
+
+const checkWalls = function () {
+  if (posX < 0 || posX >= canvas.width || posY < 0 || posY >= canvas.height) {
+    stopGame = true;
+    drawGrid(posX - speedX * gridLength, posY - speedY * gridLength, 'orange');
+    endGame();
+  }
+};
+
+const drawBomb = function (x, y) {
+
+};
+
+const eatBomb = function () {
+
+};
+
+const drawObstacle = function (x, y) {
+  context.fillStyle = 'black';
+  context.strokeStyle = '#aaa';
+  context.translate(x, y);
+
+  context.beginPath();
+  context.moveTo(15, 1);
+  context.quadraticCurveTo(19, 0, 19, 5);
+  context.lineTo(19, 15);
+  context.quadraticCurveTo(19, 19, 15, 19);
+  context.lineTo(5, 19);
+  context.quadraticCurveTo(1, 19, 1, 15);
+  context.lineTo(1, 5);
+  context.quadraticCurveTo(1, 1, 5, 1);
+  context.lineTo(15, 1);
+  // context.stroke();
+  context.fill();
+
+  context.beginPath();
+  context.moveTo(2, 5);
+  context.lineTo(15, 18);
+  context.moveTo(5, 2);
+  context.lineTo(18, 15);
+  context.stroke();
+
+  context.setTransform(1, 0, 0, 1, 0, 0);
+};
+
+const generateObstacles = function (amount) {
+  obstaclesArray = [];
+  let posX, posY;
+  for (let i = 0; i < amount; i++) {
+    posX = Math.floor(Math.random() * 20) * gridLength;
+    posY = Math.floor(Math.random() * 20) * gridLength;
+
+    while ((posX == tail[0].x && posY == tail[0].y) || (posX == fruitX && posY == fruitY)) {
+      posX = Math.floor(Math.random() * 20) * gridLength;
+      posY = Math.floor(Math.random() * 20) * gridLength;
+    };
+    obstaclesArray.push({
+      x: posX,
+      y: posY
+    });
+    drawObstacle(posX, posY);
+  }
+};
+
+const checkObstacles = function () {
+  if (obstaclesArray.filter(el => el.x == posX && el.y == posY).length) {
+    stopGame = true;
+    drawGrid(posX - speedX * gridLength, posY - speedY * gridLength, 'orange');
+    endGame();
+  }
+
+  // for (let i = 0; i < obstaclesArray.length; i++) {
+  //   if (posX == obstaclesArray[i].x && posY == obstaclesArray[i].y) {
+  //     stopGame = true;
+  //     drawGrid(posX - speedX * gridLength, posY - speedY * gridLength, 'orange');
+  //     endGame();
+  //   }
+  // };
+};
+
 const moveSnake = function () {
   posX += speedX * gridLength;
+  posY += speedY * gridLength;
+
+  if (walls) checkWalls();
+  if (obstacles) checkObstacles();
+  if (stopGame) return; //stopGame
+
   if (posX < 0) posX += canvas.width;
   if (posX >= canvas.width) posX -= canvas.width;
-  posY += speedY * gridLength;
   if (posY < 0) posY += canvas.height;
   if (posY >= canvas.height) posY -= canvas.height;
   tail.push({
@@ -111,15 +196,14 @@ const checkTail = function () {
 
 const blockMenu = function () {
   [...document.querySelectorAll('.menu__icon')].forEach(el => el.classList.add('menu__icon--disable'));
-  document.querySelector('.menu__btn:not(.menu__btn--active)').style.display = 'none';
 };
 
 const unblockMenu = function () {
   [...document.querySelectorAll('.menu__icon')].forEach(el => el.classList.remove('menu__icon--disable'));
-  document.querySelector('.menu__btn:not(.menu__btn--active)').style.display = '';
 };
 
 const initGame = function () {
+  stopGame = false;
   posX = 1 * gridLength; //starting position X of snake
   posY = 1 * gridLength; //starting position Y of snake
   fruitX = 5 * gridLength; //starting position X of first fruit
@@ -137,6 +221,7 @@ const initGame = function () {
     y: posY
   }];
   actualSpeed.innerHTML = speedLevel;
+  [bombs, walls, obstacles] = switches.map(el => el.checked);
   document.querySelector('.result__paragraph').innerHTML = ""; //clear result div - it will be completed at the end of the game
   blockMenu();
 
@@ -144,6 +229,8 @@ const initGame = function () {
   context.fillRect(0, 0, canvas.width, canvas.height);
   drawGrid(posX, posY, color);
   drawFruit(fruitX, fruitY);
+  if (obstacles) generateObstacles(amountOfObstacles);
+
   interval = setInterval(playGame, gameSpeed);
 };
 
@@ -175,7 +262,8 @@ const updateLocalStorage = function () {
   localStorage.setItem('snakeGame', JSON.stringify(updateLocalObject))
 };
 
-const endGame = function (message) {
+const endGame = function () {
+  stopGame = true;
   clearInterval(interval);
   unblockMenu();
   updateLocalStorage();
@@ -193,6 +281,7 @@ const playGame = function () {
 
   changeDirection = false;
   moveSnake();
+  if (stopGame) return; //stopGame
 
   for (let i = 0; i < Math.min(tail.length - 1, 5); i++) { //draw end of the tile with smaller grids
     clearGrid(tail[i].x, tail[i].y);

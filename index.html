@@ -21,8 +21,8 @@
         <i class="fas fa-chart-line menu__icon js-chart" data-name="Scores"></i>
       </div>
       <div class="menu__right">
-        <button class="menu__btn menu__btn--active">easy</button>
-        <button class="menu__btn">hard</button>
+        <button class="menu__btn menu__btn--active js-easy">easy</button>
+        <button class="menu__btn js-hard">hard</button>
       </div>
     </div>
     <div class="score-panel">
@@ -92,17 +92,18 @@
     <div class="instruction__body">
       <p class="paragraph">On the easy level this is the classic snake game. You can control the snake by arrows on the
         keyboard.</p>
-      <p class="paragraph">One fruit gives you one point. Every 10 points the snake will be faster.
+      <p class="paragraph">One fruit <img src="img/fruit.svg" /> gives you one point. Every 10 points the snake will be
+        faster.
         <hr>
       </p>
       <p class="paragraph">On the hard level you can turn on additional options in settings.</p>
       <p class="paragraph"><span class="paragraph--bold">Bombs</span> - eating a bomb removes 5 points. The bombs will
-        show once a minute.</p>
-      <p class="paragraph"><span class="paragraph--bold">Blocked walls</span> - the attempt at going through the walls
-        ends the game.</p>
-      <p class="paragraph"><span class="paragraph--bold">Random obstacles</span> - at the beginning of the game random
-        obstacles will be added to the board.
-        Hitting them ends the game.</p>
+        show once a minute for a few seconds.</p>
+      <p class="paragraph"><span class="paragraph--bold">Blocked walls</span> <img src="img/obstacle.svg" /> - going
+        through the walls ends the game.</p>
+      <p class="paragraph"><span class="paragraph--bold">Random obstacles</span> - at the beginning of the game 10
+        random
+        obstacles will be added to the board, hitting them ends the game.</p>
     </div>
     <div class="instruction__footer">
       <button class='instruction__btn js_closeModal'>ok</button>
