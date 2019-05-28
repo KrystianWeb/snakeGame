@@ -8,7 +8,7 @@ const actualScore = document.querySelector('.js-score');
 const actualSpeed = document.querySelector('.js-speed');
 const bestScore = document.querySelector('.js-best');
 const switches = [...document.querySelectorAll('.control__switch')];
-let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval, bombs, walls, obstacles, obstaclesArray, stopGame;
+let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval, bombs, walls, obstacles, obstaclesArray, stopGame = true;
 
 const keyEvent = function (button) {
   if (!changeDirection) {
@@ -31,7 +31,12 @@ const keyEvent = function (button) {
         if (speedY != -1) speedY = 1;
         break;
     }
-  }
+  };
+
+  if (stopGame && button.keyCode == 13) {
+    document.querySelector('.result').classList.remove('result--show');
+    initGame();
+  };
 };
 
 const setNewInterval = function () {
@@ -85,7 +90,29 @@ const checkWalls = function () {
 };
 
 const drawBomb = function (x, y) {
+  context.fillStyle = 'black';
+  context.strokeStyle = 'yellow';
+  context.translate(x, y);
 
+  context.beginPath();
+  context.arc(gridLength / 2 + 3, gridLength / 2 + 3, 6, 0, 2 * Math.PI, false);
+  context.fill();
+
+  context.beginPath();
+  context.moveTo(8, 8);
+  context.quadraticCurveTo(10, 6, 11, 7);
+  context.quadraticCurveTo(12, 8, 10, 10);
+  context.quadraticCurveTo(8, 12, 7, 11);
+  context.quadraticCurveTo(6, 10, 8, 8);
+  context.fill();
+
+  context.fillStyle = 'red';
+  context.beginPath();
+  context.arc(5, 5, 3, 0, 2 * Math.PI, false);
+  context.fill();
+  context.stroke();
+
+  context.setTransform(1, 0, 0, 1, 0, 0);
 };
 
 const eatBomb = function () {
