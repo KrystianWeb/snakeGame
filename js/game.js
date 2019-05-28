@@ -2,13 +2,16 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const colorOfBoard = getComputedStyle(canvas).backgroundColor;
 const gridLength = 20;
+const gridsInRow = canvas.width / gridLength;
+const gridsInColumn = canvas.height / gridLength;
 const amountOfObstacles = 10;
+const timeGeneratingBomb = 30 * 1000; //w milisekundach
 const startButton = document.querySelector('.result__btn');
 const actualScore = document.querySelector('.js-score');
 const actualSpeed = document.querySelector('.js-speed');
 const bestScore = document.querySelector('.js-best');
 const switches = [...document.querySelectorAll('.control__switch')];
-let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval, bombs, walls, obstacles, obstaclesArray, stopGame = true;
+let posX, posY, fruitX, fruitY, speedX, speedY, gameSpeed, changeDirection, speedLevel, score, tail, color, interval, bombInterval, bombs, walls, obstacles, obstaclesArray, bombArray, stopGame = true;
 
 const keyEvent = function (button) {
   if (!changeDirection) {
@@ -67,8 +70,8 @@ const drawFruit = function (x, y) {
 };
 
 const fruitUpdate = function () {
-  fruitX = Math.floor(Math.random() * 20) * gridLength;
-  fruitY = Math.floor(Math.random() * 20) * gridLength;
+  fruitX = Math.floor(Math.random() * gridsInRow) * gridLength;
+  fruitY = Math.floor(Math.random() * gridsInColumn) * gridLength;
   checkFruit();
 };
 
@@ -115,8 +118,36 @@ const drawBomb = function (x, y) {
   context.setTransform(1, 0, 0, 1, 0, 0);
 };
 
-const eatBomb = function () {
+const generateBomb = function () {
+  let posX, posY;
+  posX = Math.floor(Math.random() * gridsInRow) * gridLength;
+  posY = Math.floor(Math.random() * gridsInColumn) * gridLength;
 
+  while (tail.filter(el => el.x == posX && el.y == posY).length > 0 || obstaclesArray.filter(el => el.x == posX && el.y == posY).length > 0 || (posX == fruitX && posY == fruitY)) {
+    posX = Math.floor(Math.random() * gridsInRow) * gridLength;
+    posY = Math.floor(Math.random() * gridsInColumn) * gridLength;
+  };
+  bombArray.push({
+    x: posX,
+    y: posY
+  });
+  drawBomb(posX, posY);
+  console.log('wygenerowano bombę');
+  setTimeout(() => {
+    if (bombArray.length) {
+      console.log('bomba zniknęła'); //dokończyć
+      clearGrid(bombArray[0].x, bombArray[0].y);
+      bombArray = [];
+    }
+  }, 5000);
+};
+
+const checkBomb = function () {
+  if (bombArray.length && bombArray[0].x == posX && bombArray[0].y == posY) {
+    score < 3 ? score = 0 : score -= 3;
+    actualScore.innerHTML = score;
+    bombArray = [];
+  }
 };
 
 const drawObstacle = function (x, y) {
@@ -151,12 +182,12 @@ const generateObstacles = function (amount) {
   obstaclesArray = [];
   let posX, posY;
   for (let i = 0; i < amount; i++) {
-    posX = Math.floor(Math.random() * 20) * gridLength;
-    posY = Math.floor(Math.random() * 20) * gridLength;
+    posX = Math.floor(Math.random() * gridsInRow) * gridLength;
+    posY = Math.floor(Math.random() * gridsInColumn) * gridLength;
 
     while ((posX == tail[0].x && posY == tail[0].y) || (posX == fruitX && posY == fruitY)) {
-      posX = Math.floor(Math.random() * 20) * gridLength;
-      posY = Math.floor(Math.random() * 20) * gridLength;
+      posX = Math.floor(Math.random() * gridsInRow) * gridLength;
+      posY = Math.floor(Math.random() * gridsInColumn) * gridLength;
     };
     obstaclesArray.push({
       x: posX,
@@ -188,6 +219,7 @@ const moveSnake = function () {
 
   if (walls) checkWalls();
   if (obstacles) checkObstacles();
+  if (bombs) checkBomb();
   if (stopGame) return; //stopGame
 
   if (posX < 0) posX += canvas.width;
@@ -247,6 +279,8 @@ const initGame = function () {
     x: posX,
     y: posY
   }];
+  obstaclesArray = [];
+  bombArray = [];
   actualSpeed.innerHTML = speedLevel;
   [bombs, walls, obstacles] = switches.map(el => el.checked);
   document.querySelector('.result__paragraph').innerHTML = ""; //clear result div - it will be completed at the end of the game
@@ -257,6 +291,7 @@ const initGame = function () {
   drawGrid(posX, posY, color);
   drawFruit(fruitX, fruitY);
   if (obstacles) generateObstacles(amountOfObstacles);
+  if (bombs) bombInterval = setInterval(generateBomb, timeGeneratingBomb);
 
   interval = setInterval(playGame, gameSpeed);
 };
@@ -292,6 +327,7 @@ const updateLocalStorage = function () {
 const endGame = function () {
   stopGame = true;
   clearInterval(interval);
+  clearInterval(bombInterval);
   unblockMenu();
   updateLocalStorage();
 

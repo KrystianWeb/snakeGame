@@ -427,8 +427,9 @@ body {
 }
 
 .settings .paragraph img {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
+  vertical-align: -2px;
 }
 
 .settings__body {
@@ -820,8 +821,9 @@ body {
 }
 
 .instruction .paragraph img {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
+  vertical-align: -2px;
 }
 
 .scores {
@@ -904,8 +906,9 @@ body {
 }
 
 .scores .paragraph img {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
+  vertical-align: -2px;
 }
 
 #canvas {
