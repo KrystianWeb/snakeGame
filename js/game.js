@@ -47,7 +47,7 @@ const setNewInterval = function () {
   gameSpeed = gameSpeed * (9 / 10);
   interval = setInterval(playGame, gameSpeed);
   speedLevel++;
-  actualSpeed.innerHTML = speedLevel;
+  actualSpeed.textContent = speedLevel;
 }
 
 const drawGrid = function (x, y, color, width = 0) {
@@ -132,20 +132,18 @@ const generateBomb = function () {
     y: posY
   });
   drawBomb(posX, posY);
-  console.log('wygenerowano bombę');
   setTimeout(() => {
     if (bombArray.length) {
-      console.log('bomba zniknęła'); //dokończyć
       clearGrid(bombArray[0].x, bombArray[0].y);
       bombArray = [];
     }
-  }, 5000);
+  }, 10000);
 };
 
 const checkBomb = function () {
   if (bombArray.length && bombArray[0].x == posX && bombArray[0].y == posY) {
     score < 3 ? score = 0 : score -= 3;
-    actualScore.innerHTML = score;
+    actualScore.textContent = score;
     bombArray = [];
   }
 };
@@ -165,7 +163,6 @@ const drawObstacle = function (x, y) {
   context.lineTo(1, 5);
   context.quadraticCurveTo(1, 1, 5, 1);
   context.lineTo(15, 1);
-  // context.stroke();
   context.fill();
 
   context.beginPath();
@@ -203,14 +200,6 @@ const checkObstacles = function () {
     drawGrid(posX - speedX * gridLength, posY - speedY * gridLength, 'orange');
     endGame();
   }
-
-  // for (let i = 0; i < obstaclesArray.length; i++) {
-  //   if (posX == obstaclesArray[i].x && posY == obstaclesArray[i].y) {
-  //     stopGame = true;
-  //     drawGrid(posX - speedX * gridLength, posY - speedY * gridLength, 'orange');
-  //     endGame();
-  //   }
-  // };
 };
 
 const moveSnake = function () {
@@ -237,7 +226,7 @@ const moveSnake = function () {
   } else {
     fruitUpdate();
     score++;
-    actualScore.innerHTML = score;
+    actualScore.textContent = score;
     if (score != 0 && score % 10 == 0) {
       setNewInterval(); //faster snake
     }
@@ -274,16 +263,16 @@ const initGame = function () {
   gameSpeed = 150 * (0.9 ** (speedLevel - 1));
   changeDirection = false;
   score = 0; //actual score
-  actualScore.innerHTML = score;
+  actualScore.textContent = score;
   tail = [{
     x: posX,
     y: posY
   }];
   obstaclesArray = [];
   bombArray = [];
-  actualSpeed.innerHTML = speedLevel;
+  actualSpeed.textContent = speedLevel;
   [bombs, walls, obstacles] = switches.map(el => el.checked);
-  document.querySelector('.result__paragraph').innerHTML = ""; //clear result div - it will be completed at the end of the game
+  document.querySelector('.result__paragraph').textContent = ""; //clear result div - it will be completed at the end of the game
   blockMenu();
 
   context.fillStyle = colorOfBoard;
@@ -305,8 +294,8 @@ const updateLocalStorage = function () {
     //time: [`${actualDate.toLocaleDateString().slice(0,5)}.${actualDate.toLocaleDateString().slice(-2)}`, actualDate.toLocaleTimeString().slice(0, -3)], - NOT WORKING ON EDGE??
     color: color
   });
-  if (score > bestScore.innerHTML) {
-    bestScore.innerHTML = score;
+  if (score > bestScore.textContent) {
+    bestScore.textContent = score;
     updateLocalObject.scores.maxScore = score;
   };
   //keep only last 10 scores (inclugind the best one)
@@ -314,7 +303,7 @@ const updateLocalStorage = function () {
     let lastScoreDeleted = false,
       scoreIndex = 0;
     while (!lastScoreDeleted) {
-      if (updateLocalObject.scores.data[scoreIndex].score < bestScore.innerHTML) {
+      if (updateLocalObject.scores.data[scoreIndex].score < bestScore.textContent) {
         updateLocalObject.scores.data.splice(scoreIndex, 1);
         lastScoreDeleted = true
       } else scoreIndex++
@@ -332,13 +321,14 @@ const endGame = function () {
   updateLocalStorage();
 
   document.querySelector('.result').classList.add('result--show');
-  if (score == bestScore.innerHTML)
+  if (score == bestScore.textContent)
     document.querySelector('.result__paragraph').innerHTML += `<span class="result__paragraph--bold">This is your best result!!!</span>`;
   document.querySelector('.result__paragraph').innerHTML += `Your score is ${score}`;
-  document.querySelector('.result__btn').innerHTML = 'reset game';
+  document.querySelector('.result__btn').textContent = 'reset game';
 };
 
 const playGame = function () {
+  changeDirection = false;
   if (speedX == 0 && speedY == 0)
     return;
 

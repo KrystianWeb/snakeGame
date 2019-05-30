@@ -98,7 +98,7 @@ const prepareInterface = function () {
     document.querySelector('.js-hard').classList.remove('menu__btn--active');
   };
 
-  bestScore.innerHTML = localObject.scores.maxScore;
+  bestScore.textContent = localObject.scores.maxScore;
 }
 
 const prepareChart = function () {
