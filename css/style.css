@@ -315,6 +315,37 @@ body {
   color: white;
 }
 
+.warning {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  width: 96%;
+  height: 96%;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.warning__text {
+  width: 80vw;
+  font-size: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 601px) and (max-height: 601px) {
+  .warning {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
 @media (max-width: 900px) {
   .score-panel {
     -webkit-box-sizing: content-box;
