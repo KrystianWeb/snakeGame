@@ -338,7 +338,7 @@ body {
   text-align: center;
 }
 
-@media (max-width: 601px) and (max-height: 601px) {
+@media (max-width: 699px), (max-height: 599px) {
   .warning {
     display: -webkit-box;
     display: -ms-flexbox;
